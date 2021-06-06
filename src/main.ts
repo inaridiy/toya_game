@@ -1,5 +1,5 @@
-export const SayHello = (): string => {
+export const SayHello = (): number => {
   return 'Hello! TypeScript!';
 };
 
-console.log(SayHello());
+console.log(SayHello()
