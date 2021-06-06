@@ -11,8 +11,8 @@
     "eslint": "eslint src/**/*.ts",
     "eslint:fix": "eslint src/**/*.ts --fix",
     "format": "prettier --write src/**/*.{js,ts,json}",
-    "lint": "npm-run-all eslint check-types",
-    "lint:fix": "npm-run-all eslint:fix check-types format"
+    "lint": "yarn  eslint && yarn check-types",
+    "lint:fix": "yarn eslint:fix && yarn check-types && yarn format"
   },
   "husky": {
     "hooks": {
