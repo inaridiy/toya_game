@@ -13,9 +13,7 @@ const container = new PIXI.Container();
 app.stage.addChild(container);
 
 // Create a new texture
-const texture = PIXI.Texture.from(
-  'https://www.google.com/url?sa=i&url=https%3A%2F%2Fferret-plus.com%2F6845&psig=AOvVaw2ElI2htKf79ovA1dWwRAmf&ust=1623148708780000&source=images&cd=vfe&ved=0CAIQjRxqFwoTCPDG7qOqhfECFQAAAAAdAAAAABAD'
-);
+const texture = PIXI.Texture.from('/static/img/test.png');
 
 // Create a 5x5 grid of bunnies
 for (let i = 0; i < 25; i++) {

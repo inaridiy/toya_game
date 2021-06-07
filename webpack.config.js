@@ -1,5 +1,7 @@
 const path = require('path');
+
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CopyPlugin = require('copy-webpack-plugin');
 
 module.exports = {
   mode: 'development',
@@ -19,7 +21,21 @@ module.exports = {
   resolve: {
     extensions: ['.ts', '.tsx', '.js', '.json'],
   },
-  plugins: [new HtmlWebpackPlugin()],
+  performance: {
+    maxEntrypointSize: 500000,
+    maxAssetSize: 500000,
+  },
+  plugins: [
+    new HtmlWebpackPlugin(),
+    new CopyPlugin({
+      patterns: [
+        {
+          from: 'src/assets',
+          to: 'static',
+        },
+      ],
+    }),
+  ],
   target: ['web', 'es5'],
   devServer: {
     contentBase: path.join(__dirname, 'dist'),
