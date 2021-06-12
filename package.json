@@ -15,11 +15,6 @@
     "lint:fix": "yarn eslint:fix && yarn check-types && yarn format",
     "test": "jest"
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "yarn lint:fix"
-    }
-  },
   "devDependencies": {
     "@types/pixi.js": "^5.0.0",
     "@typescript-eslint/eslint-plugin": "^4.26.0",

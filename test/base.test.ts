@@ -1,4 +1,4 @@
-import { Coordinate } from '../src/base/form/coordinate';
+import { Coordinate } from '../src/base/shape/shape';
 
 test('ゲッターのテスト', () => {
   expect(new Coordinate(5, 6).getCoordinate).toEqual({ x: 5, y: 6 });

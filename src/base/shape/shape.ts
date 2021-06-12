@@ -3,6 +3,11 @@ export interface ICoordinate {
   y: number;
 }
 
+export interface IShapes extends ICoordinate {
+  type: string;
+  hitCheck: (shape: IShapes) => boolean;
+}
+
 export class Coordinate implements ICoordinate {
   constructor(public x: number, public y: number) {}
   public get getCoordinate(): ICoordinate {
