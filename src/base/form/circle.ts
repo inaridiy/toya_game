@@ -1,2 +1,2 @@
 import { Coordinate } from './coordinate';
-class Circle extends Coordinate {}
+export class Circle extends Coordinate {}
