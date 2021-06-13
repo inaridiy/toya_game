@@ -1,40 +1,38 @@
-import * as PIXI from 'pixi.js';
+import { SpriteActor } from './base/actor';
+const canvas = <HTMLCanvasElement>document.getElementById('canvas');
+const ctx = <CanvasRenderingContext2D>canvas.getContext('2d');
+const i = new Image();
 
-const app = new PIXI.Application({
-  width: 400,
-  height: 300,
-  backgroundColor: 0x1099bb,
-  resolution: window.devicePixelRatio || 1,
-});
-document.body.appendChild(app.view);
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
 
-const container = new PIXI.Container();
+i.src = '/static/img/生首.png';
+i.onload = () => {
+  const actor = new SpriteActor(50, 90, 3, [], i, 40);
+  let moveFlag = '';
+  addEventListener('keydown', (e) => {
+    moveFlag = e.key;
+  });
+  addEventListener('keyup', (e) => {
+    if (e.key === moveFlag) {
+      moveFlag = '';
+    }
+  });
 
-app.stage.addChild(container);
+  (function loop() {
+    if (moveFlag === 'ArrowRight') {
+      actor.x += 3;
+    } else if (moveFlag === 'ArrowLeft') {
+      actor.x -= 3;
+    } else if (moveFlag === 'ArrowUp') {
+      actor.y -= 3;
+    } else if (moveFlag === 'ArrowDown') {
+      actor.y += 3;
+    }
 
-// Create a new texture
-const texture = PIXI.Texture.from('/static/img/test.png');
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    actor.render(ctx);
 
-// Create a 5x5 grid of bunnies
-for (let i = 0; i < 25; i++) {
-  const bunny = new PIXI.Sprite(texture);
-  bunny.anchor.set(0.5);
-  bunny.x = (i % 5) * 40;
-  bunny.y = Math.floor(i / 5) * 40;
-  container.addChild(bunny);
-}
-
-// Move container to the center
-container.x = app.screen.width / 2;
-container.y = app.screen.height / 2;
-
-// Center bunny sprite in local container coordinates
-container.pivot.x = container.width / 2;
-container.pivot.y = container.height / 2;
-
-// Listen for animate update
-app.ticker.add((delta) => {
-  // rotate the container!
-  // use delta to create frame-independent transform
-  container.rotation -= 0.01 * delta;
-});
+    requestAnimationFrame(loop);
+  })();
+};

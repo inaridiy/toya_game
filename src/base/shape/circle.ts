@@ -1,17 +1,11 @@
-import { IShapes, Coordinate } from './shape';
+import { Coordinate, Shapes } from '.';
+import { hitChecker } from '../hit-check/hitcheck';
 
-export class Circle extends Coordinate implements IShapes {
+export class Circle extends Coordinate {
   constructor(x: number, y: number, public radius: number) {
     super(x, y);
   }
-  public type = 'circle';
-  hitCheck(shape: IShapes) {
-    switch (shape.type) {
-      case 'circle':
-        break;
-      case 'rectangle':
-        break;
-    }
-    return true;
+  hitCheck(shape: Shapes): boolean {
+    return hitChecker(this, shape);
   }
 }

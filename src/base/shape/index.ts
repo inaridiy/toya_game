@@ -1,11 +1,8 @@
+import { Circle } from './circle';
+import { Rectangle } from './rectangle';
 export interface ICoordinate {
   x: number;
   y: number;
-}
-
-export interface IShapes extends ICoordinate {
-  type: string;
-  hitCheck: (shape: IShapes) => boolean;
 }
 
 export class Coordinate implements ICoordinate {
@@ -19,3 +16,5 @@ export class Coordinate implements ICoordinate {
     );
   }
 }
+
+export type Shapes = Circle | Rectangle;

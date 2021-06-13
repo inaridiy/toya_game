@@ -1,6 +1,9 @@
-import { IShapes } from '../shape/shape';
+import { Circle } from '../shape/circle';
+import { Rectangle } from '../shape/rectangle';
 
 export const hitCheckOfCircleAndRectangle = (
-  circleShape: IShapes,
-  rectangle: IShapes
-): boolean => {};
+  circleShape: Circle,
+  rectangle: Rectangle
+): boolean => {
+  return true;
+};

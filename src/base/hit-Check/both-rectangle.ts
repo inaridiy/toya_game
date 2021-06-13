@@ -1,6 +1,8 @@
-import { IShapes } from '../shape/shape';
+import { Rectangle } from '../shape/rectangle';
 
 export const hitCheckOfRectangle = (
-  rectangle: IShapes,
-  otherRectangle: IShapes
-): boolean => {};
+  rectangle: Rectangle,
+  otherRectangle: Rectangle
+): boolean => {
+  return true;
+};

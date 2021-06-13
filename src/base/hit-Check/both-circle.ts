@@ -1,6 +1,11 @@
-import { IShapes } from '../shape/shape';
+import { Circle } from '../shape/circle';
 
 export const hitCheckOfCircle = (
-  circleShape: IShapes,
-  otherCircle: IShapes
-): boolean => {};
+  circleShape: Circle,
+  otherCircle: Circle
+): boolean => {
+  const result =
+    circleShape.getDistance(otherCircle) <=
+    circleShape.radius + otherCircle.radius;
+  return result;
+};

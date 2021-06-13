@@ -1,6 +1,6 @@
-import { IShapes, Coordinate } from './shape';
+import { Coordinate } from '.';
 
-export class Rectangle extends Coordinate implements IShapes {
+export class Rectangle extends Coordinate {
   constructor(
     x: number,
     y: number,
@@ -10,5 +10,4 @@ export class Rectangle extends Coordinate implements IShapes {
   ) {
     super(x, y);
   }
-  public type = 'rectangle';
 }

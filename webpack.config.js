@@ -26,11 +26,13 @@ module.exports = {
     maxAssetSize: 500000,
   },
   plugins: [
-    new HtmlWebpackPlugin(),
+    new HtmlWebpackPlugin({
+      template: path.join(__dirname, 'src/html/index.html'),
+    }),
     new CopyPlugin({
       patterns: [
         {
-          from: 'src/assets',
+          from: 'assets',
           to: 'static',
         },
       ],
@@ -40,5 +42,6 @@ module.exports = {
   devServer: {
     contentBase: path.join(__dirname, 'dist'),
     compress: true,
+    hot: true,
   },
 };
