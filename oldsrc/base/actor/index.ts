@@ -12,11 +12,11 @@ export class Actor extends Circle {
     super(x, y, radius);
     this.e = new EventDispatcher();
   }
-  spawnActor(actor: Actor) {
+  spawnActor(actor: Actor): void {
     this.e.dispatchEvent('spawnactor', new GameEvent(actor));
   }
 
-  destroy() {
+  destroy(): void {
     this.e.dispatchEvent('destroy', new GameEvent(this));
   }
 }

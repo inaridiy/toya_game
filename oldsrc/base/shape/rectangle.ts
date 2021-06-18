@@ -5,8 +5,7 @@ export class Rectangle extends Coordinate {
     x: number,
     y: number,
     public width: number,
-    public height: number,
-    public angle: number
+    public height: number
   ) {
     super(x, y);
   }

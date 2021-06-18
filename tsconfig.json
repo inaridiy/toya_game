@@ -14,6 +14,6 @@
       "DOM"
     ]
   },
-    "include": ["src/**/*"],
+    "include": ["src/**/*", "oldsrc/base"],
     "exclude": ["node_modules", "**/*.spec.ts"]
 }

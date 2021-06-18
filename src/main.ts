@@ -1,4 +1,4 @@
-import { SpriteActor } from './base/actor';
+import { SpriteActor } from './oldsrc/base/actor';
 const canvas = <HTMLCanvasElement>document.getElementById('canvas');
 const ctx = <CanvasRenderingContext2D>canvas.getContext('2d');
 const i = new Image();
@@ -36,3 +36,5 @@ i.onload = () => {
     requestAnimationFrame(loop);
   })();
 };
+
+console.log('hi');

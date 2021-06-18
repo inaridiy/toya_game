@@ -2,8 +2,10 @@ const path = require('path');
 
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
+const BundleAnalyzerPlugin =
+  require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
-module.exports = {
+const config = {
   mode: 'development',
 
   entry: './src/main.ts',
@@ -44,4 +46,14 @@ module.exports = {
     compress: true,
     hot: true,
   },
+};
+module.exports = (env, argv) => {
+  console.log(argv);
+  if (argv.mode !== 'production') {
+    config.target = 'web';
+  }
+  if (argv.analyze) {
+    config.plugins.push(new BundleAnalyzerPlugin());
+  }
+  return config;
 };

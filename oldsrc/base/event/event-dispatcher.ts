@@ -11,7 +11,7 @@ export class EventDispatcher {
 
     this._eventListeners[type].push(callback);
   }
-  dispatchEvent(type: string, event: GameEvent) {
+  dispatchEvent(type: string, event: GameEvent): void {
     const listeners = this._eventListeners[type];
     if (listeners != undefined)
       listeners.forEach((callback) => callback(event));

@@ -23,7 +23,7 @@ class Input {
   }
 }
 
-class InputReceiver {
+export class InputReceiver {
   public _keyMap: Keymap = new Map();
   public _prevKeyMap: Keymap = new Map();
 
