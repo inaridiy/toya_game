@@ -16,9 +16,7 @@
     "test": "jest"
   },
   "husky": {
-    "hooks": {
-      "pre-commit": "yarn lint:fix"
-    }
+    "hooks": {}
   },
   "devDependencies": {
     "@types/jest": "^26.0.23",

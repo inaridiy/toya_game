@@ -1,4 +1,4 @@
-import { Actor } from '../actor';
+import { Actor } from '../../../oldsrc/base/actor';
 type cb = (event: GameEvent) => void;
 
 export class EventDispatcher {
