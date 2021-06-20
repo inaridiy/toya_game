@@ -1,4 +1,3 @@
-import { Actor } from '../../../oldsrc/base/actor';
 type cb = (event: GameEvent) => void;
 
 export class EventDispatcher {
@@ -16,7 +15,4 @@ export class EventDispatcher {
     if (listeners != undefined)
       listeners.forEach((callback) => callback(event));
   }
-}
-export class GameEvent {
-  constructor(public target: Actor) {}
 }

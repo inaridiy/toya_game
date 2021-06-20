@@ -1,4 +1,6 @@
 import { Coordinate } from './coordinate';
+import { hitCheker } from '../hit-check';
+
 export type ShapeTypes = 'circle' | 'line' | 'rectangle';
 export type Shapes = Circle | Line | Rectangle;
 
@@ -12,18 +14,33 @@ export class Circle extends Coordinate implements Shape {
     super(x, y);
   }
   type: 'circle' = 'circle';
-  hitTest(other: Shapes) {
-    return true;
+  hitTest(other: Shapes): boolean {
+    return hitCheker(this, other);
   }
 }
 
 export class Line extends Coordinate implements Shape {
-  constructor(x: number, y: number, public length: number) {
+  constructor(x: number, y: number, public length: number, degree: number) {
     super(x, y);
+    this.halfOfLength = this.length / 2;
+    this.angle = degree * (Math.PI / 180);
   }
   type: 'line' = 'line';
-  hitTest(other: Shapes) {
-    return true;
+  angle: number;
+  private halfOfLength: number;
+
+  get startPoint(): Coordinate {
+    const startX = this.x + this.halfOfLength * Math.cos(this.angle);
+    const startY = this.y + this.halfOfLength * Math.sin(this.angle);
+    return new Coordinate(startX, startY);
+  }
+  get endPoint(): Coordinate {
+    const startX = this.x - this.halfOfLength * Math.cos(this.angle);
+    const startY = this.y - this.halfOfLength * Math.sin(this.angle);
+    return new Coordinate(startX, startY);
+  }
+  hitTest(other: Shapes): boolean {
+    return hitCheker(this, other);
   }
 }
 
@@ -37,7 +54,16 @@ export class Rectangle extends Coordinate implements Shape {
     super(x, y);
   }
   type: 'rectangle' = 'rectangle';
-  hitTest(other: Shapes) {
-    return true;
+
+  isInside(ci: Coordinate): boolean {
+    return (
+      ci.x < this.x + this.width / 2 &&
+      ci.x > this.x - this.width / 2 &&
+      ci.y < this.y + this.height / 2 &&
+      ci.y > this.y - this.height / 2
+    );
+  }
+  hitTest(other: Shapes): boolean {
+    return hitCheker(this, other);
   }
 }
