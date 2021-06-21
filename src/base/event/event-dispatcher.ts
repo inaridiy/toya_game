@@ -1,3 +1,5 @@
+import { Actor } from '../actor';
+
 type cb = (event: GameEvent) => void;
 
 export class EventDispatcher {
@@ -16,3 +18,8 @@ export class EventDispatcher {
       listeners.forEach((callback) => callback(event));
   }
 }
+export class GameEvent {
+  constructor(public target: Actor) {}
+}
+
+export class GameInfo {}

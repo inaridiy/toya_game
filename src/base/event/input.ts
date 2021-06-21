@@ -1,22 +1,22 @@
 type Keymap = Map<string, boolean>;
 
-class Input {
+export class Input {
   constructor(public keyMap: Keymap, public preKeyMap: Keymap) {}
-  private _getKeyFromMap(keyName: string, map: Keymap) {
-    return map.has(keyName) ? map.get(keyName) : false;
+  private _getKeyFromMap(keyName: string, map: Keymap): boolean {
+    return map.has(keyName) ? <boolean>map.get(keyName) : false;
   }
-  private _getPrevKey(keyName: string) {
+  private _getPrevKey(keyName: string): boolean {
     return this._getKeyFromMap(keyName, this.preKeyMap);
   }
-  getKey(keyName: string) {
+  getKey(keyName: string): boolean {
     return this._getKeyFromMap(keyName, this.keyMap);
   }
-  getKeyDown(keyName: string) {
+  getKeyDown(keyName: string): boolean {
     const prevDown = this._getPrevKey(keyName);
     const currentDown = this.getKey(keyName);
     return !prevDown && currentDown;
   }
-  getKeyUp(keyName: string) {
+  getKeyUp(keyName: string): boolean {
     const prevDown = this._getPrevKey(keyName);
     const currentDown = this.getKey(keyName);
     return prevDown && !currentDown;
@@ -36,7 +36,7 @@ export class InputReceiver {
     );
   }
 
-  getInput() {
+  getInput(): Input {
     const keyMap = new Map(this._keyMap);
     const prevKeyMap = new Map(this._prevKeyMap);
     this._prevKeyMap = new Map(this._keyMap);
