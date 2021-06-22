@@ -32,7 +32,7 @@ export class Vec2 {
   }
   get normalized(): Vec2 {
     const { x, y, magnitude } = this;
-    return new Vec2(x / magnitude, y / magnitude);
+    return magnitude === 0 ? this : new Vec2(x / magnitude, y / magnitude);
   }
   static add(v1: Vec2, v2: Vec2): Vec2 {
     return v1.clone().add(v2);

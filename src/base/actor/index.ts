@@ -4,12 +4,12 @@ import { Coordinate } from './shape/coordinate';
 import { Input } from '../event/input';
 import { GameEvent, GameInfo } from '../event/event-dispatcher';
 import { Sprite } from '../assets/sprite';
-import { Scene } from '../scene/scene';
+import { Scene } from '../game/scene';
 
 export abstract class Actor extends EventDispatcher {
   constructor(
-    public _x: number,
-    public _y: number,
+    private _x: number,
+    private _y: number,
     public hitBox: Shapes,
     public tags: string[] = []
   ) {
@@ -48,18 +48,11 @@ export abstract class Actor extends EventDispatcher {
 }
 
 export abstract class SpriteActor extends Actor {
-  constructor(
-    x: number,
-    y: number,
-    hitBox: Shapes,
-    tags: string[] = [],
-    public sprites: Map<string, Sprite>
-  ) {
+  constructor(x: number, y: number, hitBox: Shapes, tags: string[] = []) {
     super(x, y, hitBox, tags);
   }
 
-  drawSprite(ctx: CanvasRenderingContext2D, name: string): void {
-    const sprite = this.sprites.get(name);
+  drawSprite(ctx: CanvasRenderingContext2D, sprite: Sprite): void {
     if (sprite === undefined) {
       console.error('スプライトがありません');
       return;
