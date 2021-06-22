@@ -19,7 +19,7 @@ export class EventDispatcher {
   }
 }
 export class GameEvent {
-  constructor(public target: Actor) {}
+  constructor(public target: any) {}
 }
 
 export class GameInfo {}

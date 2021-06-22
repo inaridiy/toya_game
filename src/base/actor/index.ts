@@ -4,6 +4,7 @@ import { Coordinate } from './shape/coordinate';
 import { Input } from '../event/input';
 import { GameEvent, GameInfo } from '../event/event-dispatcher';
 import { Sprite } from '../assets/sprite';
+import { Scene } from '../scene/scene';
 
 export abstract class Actor extends EventDispatcher {
   constructor(
@@ -14,7 +15,7 @@ export abstract class Actor extends EventDispatcher {
   ) {
     super();
   }
-  abstract update(gameInfo: GameInfo, input: Input): void;
+  abstract update(gameInfo: GameInfo, input: Input, scene: Scene): void;
   abstract render(ctx: CanvasRenderingContext2D): void;
   hasTag(tagName: string): boolean {
     return this.tags.includes(tagName);
