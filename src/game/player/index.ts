@@ -16,7 +16,13 @@ export class Player extends SpriteActor {
     super(x, y, new Circle(x, y, 5), ['player', 'character']);
   }
 
-  update(gameInfo: GameInfo, input: Input): void {
+  private _timeCount = 0;
+
+  update(gameInfo: never, input: Input): void {
+    this._move(input);
+  }
+
+  private _move(input: Input): void {
     const movingDirection = new Vec2(0, 0);
     input.getKey('ArrowUp') || movingDirection.y++;
     input.getKey('ArrowDown') || movingDirection.y--;
@@ -28,7 +34,9 @@ export class Player extends SpriteActor {
     this.y += speedVec.y;
   }
 
+  private _shot(input: Input): void {}
+
   render(ctx: CanvasRenderingContext2D): void {
-    this.drawSprite(ctx, this.sprites.main);
+    this.drawSprite(ctx, this.sprites.main, 100);
   }
 }

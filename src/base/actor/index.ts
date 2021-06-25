@@ -52,11 +52,16 @@ export abstract class SpriteActor extends Actor {
     super(x, y, hitBox, tags);
   }
 
-  drawSprite(ctx: CanvasRenderingContext2D, sprite: Sprite): void {
+  drawSprite(
+    ctx: CanvasRenderingContext2D,
+    sprite: Sprite,
+    width: number = sprite.rect.width
+  ): void {
     if (sprite === undefined) {
       console.error('スプライトがありません');
       return;
     }
+
     ctx.drawImage(
       sprite.image,
       sprite.rect.x,
@@ -65,8 +70,8 @@ export abstract class SpriteActor extends Actor {
       sprite.rect.height,
       this.x,
       this.y,
-      sprite.rect.width,
-      sprite.rect.height
+      width,
+      (sprite.rect.height * width) / sprite.rect.width
     );
   }
 }

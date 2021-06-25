@@ -4,35 +4,38 @@ import { GameEvent, GameInfo } from '../event/event-dispatcher';
 import { Input } from '../event/input';
 
 export abstract class Scene extends EventDispatcher {
-  constructor(public ctx: CanvasRenderingContext2D) {
-    super();
-  }
   public actors: Actor[] = [];
   public _destroyedActors: Actor[] = [];
 
-  add(actor: Actor) {
+  add(actor: Actor): void {
     this.actors.push(actor);
-    actor.addEventListener('spawnactor', (e) => this.add(e.target));
-    actor.addEventListener('destroy', (e) => this._addDestroyedActor(e.target));
+    actor.addEventListener('spawnactor', (e) => this.add(e.target as Actor));
+    actor.addEventListener('destroy', (e) =>
+      this._addDestroyedActor(e.target as Actor)
+    );
   }
-  remove(actor: Actor) {
+  remove(actor: Actor): void {
     const index = this.actors.indexOf(actor);
     this.actors.splice(index, 1);
   }
-  changeScene(newScene: Scene) {
+  changeScene(newScene: Scene): void {
     const event = new GameEvent(newScene);
     this.dispatchEvent('changescene', event);
   }
-  update(gameInfo: GameInfo, input: Input) {
+  update(
+    gameInfo: GameInfo,
+    input: Input,
+    ctx: CanvasRenderingContext2D
+  ): void {
     this._updateAll(gameInfo, input, this);
     this._hitTest();
     this._disposeDestroyedActors();
-    this._renderAll();
+    this._renderAll(ctx);
   }
-  _updateAll(gameInfo: GameInfo, input: Input, scene: Scene) {
+  private _updateAll(gameInfo: GameInfo, input: Input, scene: Scene): void {
     this.actors.forEach((actor) => actor.update(gameInfo, input, scene));
   }
-  _hitTest() {
+  private _hitTest(): void {
     const length = this.actors.length;
     for (let i = 0; i < length - 1; i++) {
       for (let j = i + 1; j < length; j++) {
@@ -46,14 +49,14 @@ export abstract class Scene extends EventDispatcher {
       }
     }
   }
-  _renderAll() {
-    this.actors.forEach((obj) => obj.render(this.ctx));
+  private _renderAll(ctx: CanvasRenderingContext2D): void {
+    this.actors.forEach((obj) => obj.render(ctx));
   }
-  _addDestroyedActor(actor: Actor) {
+  private _addDestroyedActor(actor: Actor): void {
     this._destroyedActors.push(actor);
   }
 
-  _disposeDestroyedActors() {
+  private _disposeDestroyedActors(): void {
     this._destroyedActors.forEach((actor) => this.remove(actor));
     this._destroyedActors = [];
   }
