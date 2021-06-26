@@ -21,7 +21,7 @@ assets
       playerImg,
       new Rectangle(0, 0, playerImg.width, playerImg.height)
     );
-    const player = new Player(50, 50, { main: sprite }, 10);
+    const player = new Player(300, 300, { main: sprite, bullet: sprite }, 10);
     testScene.add(player);
 
     const game = new Game(

@@ -55,23 +55,28 @@ export abstract class SpriteActor extends Actor {
   drawSprite(
     ctx: CanvasRenderingContext2D,
     sprite: Sprite,
-    width: number = sprite.rect.width
+    width: number = sprite.rect.width,
+    degree: number = 0
   ): void {
     if (sprite === undefined) {
       console.error('スプライトがありません');
       return;
     }
-
+    ctx.save();
+    ctx.translate(this.x, this.y);
+    ctx.rotate((degree * Math.PI) / 180);
+    const height = (sprite.rect.height * width) / sprite.rect.width;
     ctx.drawImage(
       sprite.image,
       sprite.rect.x,
       sprite.rect.y,
       sprite.rect.width,
       sprite.rect.height,
-      this.x,
-      this.y,
+      -width / 2,
+      -height / 2,
       width,
-      (sprite.rect.height * width) / sprite.rect.width
+      height
     );
+    ctx.restore();
   }
 }

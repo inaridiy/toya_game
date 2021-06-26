@@ -18,7 +18,7 @@ export abstract class PlayerBullet extends SpriteActor {
 export class PlayerBulletA extends PlayerBullet {
   constructor(x: number, y: number, sprite: Sprite) {
     const sitRadius = 5;
-    const speed = 50;
+    const speed = 15;
 
     super(x, y, sitRadius, sprite, speed);
   }
@@ -29,6 +29,6 @@ export class PlayerBulletA extends PlayerBullet {
     }
   }
   render(ctx: CanvasRenderingContext2D): void {
-    this.drawSprite(ctx, this.sprite, 8);
+    this.drawSprite(ctx, this.sprite, 40, 180);
   }
 }
