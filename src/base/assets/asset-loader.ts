@@ -1,12 +1,17 @@
 type ImagePromise = Promise<HTMLImageElement>;
 
 export class AssetManager {
+  constructor(public basePath: string) {}
   private _promises: ImagePromise[] = [];
   private _assets: Map<string, HTMLImageElement> = new Map();
 
+  addImages(images: { name: string; url: string }[]): void {
+    images.forEach(({ name, url }) => this.addImage(name, url));
+  }
+
   addImage(name: string, url: string): void {
     const img = new Image();
-    img.src = url;
+    img.src = this.basePath + url;
 
     const promise: ImagePromise = new Promise((resolve, reject) => {
       img.addEventListener('load', () => {

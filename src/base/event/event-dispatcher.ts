@@ -1,31 +1,35 @@
-import { Actor } from '../actor';
 import { Scene } from '../game/scene';
 import { Rectangle } from '../actor/shape/index';
 
-type cb = (event: GameEvent) => void;
-type events = 'spawnactor' | 'destroy' | 'changescene' | 'hit';
-type EventTargets = Actor | Scene;
+type cb<T> = (event: GameEvent<T>) => void;
+type sceneEvents = 'changescene';
+type actorEvents = 'spawnactor' | 'destroy' | 'hit';
 
-export class EventDispatcher {
-  public _eventListeners: { [s: string]: cb[] } = {};
+export class EventDispatcher<T> {
+  public _eventListeners: { [t in sceneEvents | actorEvents]: cb<T>[] } = {
+    changescene: [],
+    spawnactor: [],
+    destroy: [],
+    hit: [],
+  };
 
-  addEventListener(type: events, callback: cb): void {
-    if (this._eventListeners[type] == undefined) {
-      this._eventListeners[type] = [];
-    }
-
+  addEventListener(type: sceneEvents | actorEvents, callback: cb<T>): void {
     this._eventListeners[type].push(callback);
   }
-  dispatchEvent(type: events, event: GameEvent): void {
+  dispatchEvent(type: sceneEvents | actorEvents, event: GameEvent<T>): void {
     const listeners = this._eventListeners[type];
     if (listeners != undefined)
       listeners.forEach((callback) => callback(event));
   }
 }
-export class GameEvent {
-  constructor(public target: EventTargets) {}
+export class GameEvent<T> {
+  constructor(public target: T) {}
 }
 
 export class GameInfo {
-  constructor(public screenRect: Rectangle, public currentScene: Scene) {}
+  constructor(
+    public screenRect: Rectangle,
+    public currentScene: Scene,
+    public count: number
+  ) {}
 }

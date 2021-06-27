@@ -1,29 +1,16 @@
-import { Player } from './game/player';
-import { Scene } from './base/game/scene';
 import { AssetManager } from './base/assets/asset-loader';
-import { Sprite } from './base/assets/sprite';
-import { Rectangle } from './base/actor/shape';
 import { Game } from './base/game/game';
+import { Test } from './game/scenes/test';
 
 const canvas = <HTMLCanvasElement>document.getElementById('canvas');
-class TestScene extends Scene {}
 
-const assets = new AssetManager();
-assets.addImage('ago', '/static/img/生首.png');
+const assets = new AssetManager('/static/img/');
+assets.addImage('ago', '生首.png');
+assets.addImage('yugamin', 'yugamin.png');
 assets
   .loadAll()
   .then(() => {
-    console.log('image loaded');
-    const testScene = new TestScene();
-
-    const playerImg = assets.get('ago');
-    const sprite = new Sprite(
-      playerImg,
-      new Rectangle(0, 0, playerImg.width, playerImg.height)
-    );
-    const player = new Player(300, 300, { main: sprite, bullet: sprite }, 10);
-    testScene.add(player);
-
+    const testScene = new Test(assets);
     const game = new Game(
       canvas,
       window.innerWidth,

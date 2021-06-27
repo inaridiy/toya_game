@@ -6,7 +6,7 @@ import { GameEvent, GameInfo } from '../event/event-dispatcher';
 import { Sprite } from '../assets/sprite';
 import { Scene } from '../game/scene';
 
-export abstract class Actor extends EventDispatcher {
+export abstract class Actor extends EventDispatcher<Actor> {
   constructor(
     private _x: number,
     private _y: number,
@@ -15,6 +15,8 @@ export abstract class Actor extends EventDispatcher {
   ) {
     super();
   }
+  type: 'actor' = 'actor';
+
   abstract update(gameInfo: GameInfo, input: Input, scene: Scene): void;
   abstract render(ctx: CanvasRenderingContext2D): void;
   hasTag(tagName: string): boolean {
@@ -55,8 +57,8 @@ export abstract class SpriteActor extends Actor {
   drawSprite(
     ctx: CanvasRenderingContext2D,
     sprite: Sprite,
-    width: number = sprite.rect.width,
-    degree: number = 0
+    width = sprite.rect.width,
+    degree = 0
   ): void {
     if (sprite === undefined) {
       console.error('スプライトがありません');

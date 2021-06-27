@@ -12,6 +12,12 @@ export abstract class PlayerBullet extends SpriteActor {
     public speed: number
   ) {
     super(x, y, new Circle(x, y, radius), ['playerBullet']);
+
+    this.addEventListener('hit', (e) => {
+      if (e.target.hasTag('enemy')) {
+        this.destroy();
+      }
+    });
   }
 }
 

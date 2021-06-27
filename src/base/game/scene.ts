@@ -3,16 +3,16 @@ import { Actor } from '../actor';
 import { GameEvent, GameInfo } from '../event/event-dispatcher';
 import { Input } from '../event/input';
 
-export abstract class Scene extends EventDispatcher {
+export abstract class Scene extends EventDispatcher<Actor | Scene> {
   public actors: Actor[] = [];
   public _destroyedActors: Actor[] = [];
+  public se = new EventDispatcher<Scene>();
+  type: 'scene' = 'scene';
 
   add(actor: Actor): void {
     this.actors.push(actor);
-    actor.addEventListener('spawnactor', (e) => this.add(e.target as Actor));
-    actor.addEventListener('destroy', (e) =>
-      this._addDestroyedActor(e.target as Actor)
-    );
+    actor.addEventListener('spawnactor', (e) => this.add(e.target));
+    actor.addEventListener('destroy', (e) => this._addDestroyedActor(e.target));
   }
   remove(actor: Actor): void {
     const index = this.actors.indexOf(actor);

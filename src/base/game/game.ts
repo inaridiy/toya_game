@@ -23,13 +23,16 @@ export class Game {
   public currentScene: Scene;
   public screenRect: Rectangle;
 
+  private _count = 0;
   private _inputReceiver = new InputReceiver();
 
   changeScene(newScene: Scene): void {
     this.currentScene = newScene;
-    this.currentScene.addEventListener('changescene', (e) =>
-      this.changeScene(e.target as Scene)
-    );
+    this.currentScene.addEventListener('changescene', (e) => {
+      if (e.target.type === 'scene') {
+        this.changeScene(e.target);
+      }
+    });
   }
 
   start(): void {
@@ -37,8 +40,9 @@ export class Game {
   }
 
   loop(): void {
+    this._count++;
     this.ctx.clearRect(0, 0, this.width, this.height);
-    const info = new GameInfo(this.screenRect, this.currentScene);
+    const info = new GameInfo(this.screenRect, this.currentScene, this._count);
     const input = this._inputReceiver.getInput();
     this.currentScene.update(info, input, this.ctx);
     window.requestAnimationFrame(this.loop.bind(this));

@@ -1,24 +1,31 @@
 import { SpriteActor } from '../../base/actor';
 import { Circle } from '../../base/actor/shape';
-import { GameInfo } from '../../base/event/event-dispatcher';
 import { Input } from '../../base/event/input';
-import { Scene } from '../../base/game/scene';
 import { Sprite } from '../../base/assets/sprite';
 import { Vec2 } from '../../base/vector/vec';
 import { PlayerBulletA } from './player-bullet';
+import { AssetManager } from '../../base/assets/asset-loader';
+import { Rectangle } from '../../base/actor/shape';
 
 export class Player extends SpriteActor {
   constructor(
     x: number,
     y: number,
-    public sprites: { main: Sprite; bullet: Sprite },
+    assets: AssetManager,
     public speed: number
   ) {
     super(x, y, new Circle(x, y, 5), ['player', 'character']);
+    const playerImg = assets.get('ago');
+    const sprite = new Sprite(
+      playerImg,
+      new Rectangle(0, 0, playerImg.width, playerImg.height)
+    );
+    this.sprites = { main: sprite, bullet: sprite };
   }
 
   private _timeCount = 0;
   private _shotInterval = 10;
+  public sprites: { main: Sprite; bullet: Sprite };
 
   update(gameInfo: never, input: Input): void {
     this._move(input);
