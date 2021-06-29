@@ -3,7 +3,7 @@ import { Circle } from '../../base/actor/shape';
 import { Input } from '../../base/event/input';
 import { Sprite } from '../../base/assets/sprite';
 import { Vec2 } from '../../base/vector/vec';
-import { PlayerBulletA } from './player-bullet';
+import { PlayerBulletB } from './player-bullet';
 import { AssetManager } from '../../base/assets/asset-loader';
 import { Rectangle } from '../../base/actor/shape';
 
@@ -48,7 +48,7 @@ export class Player extends SpriteActor {
     this._timeCount++;
     const isFireReader = this._timeCount > this._shotInterval;
     if (isFireReader && input.getKey(' ')) {
-      const bullet = new PlayerBulletA(this.x, this.y, this.sprites.bullet);
+      const bullet = new PlayerBulletB(this.x, this.y, this.sprites.bullet);
       this.spawnActor(bullet);
       this._timeCount = 0;
     }

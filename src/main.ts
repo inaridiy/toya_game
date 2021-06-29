@@ -2,7 +2,7 @@ import { AssetManager } from './base/assets/asset-loader';
 import { Game } from './base/game/game';
 import { Test } from './game/scenes/test';
 
-const canvas = <HTMLCanvasElement>document.getElementById('canvas');
+const canvas = document.getElementById('canvas') as HTMLCanvasElement;
 
 const assets = new AssetManager('/static/img/');
 assets.addImage('ago', '生首.png');

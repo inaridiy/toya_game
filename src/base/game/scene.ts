@@ -6,7 +6,7 @@ import { Input } from '../event/input';
 export abstract class Scene extends EventDispatcher<Actor | Scene> {
   public actors: Actor[] = [];
   public _destroyedActors: Actor[] = [];
-  public se = new EventDispatcher<Scene>();
+
   type: 'scene' = 'scene';
 
   add(actor: Actor): void {
