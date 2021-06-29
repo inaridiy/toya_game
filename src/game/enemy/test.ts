@@ -31,6 +31,9 @@ export class TestMob extends Enemy {
     this.x = Math.cos(this.timeCount / 40) * 300 + 500;
     this.y = Math.sin(this.timeCount / 40) * 100 + 100;
     this.timeCount++;
+    if (this.life <= 0) {
+      this.destroy();
+    }
   }
   render(ctx: CanvasRenderingContext2D): void {
     this.drawSprite(ctx, this.sprite, 100);
@@ -47,7 +50,7 @@ export class TestMob2 extends Enemy {
     this.sprite = this.init(assets);
   }
 
-  public life = 20;
+  public life = 5;
   public sprite: Sprite;
   public timeCount = 0;
 
@@ -64,6 +67,9 @@ export class TestMob2 extends Enemy {
     this.x = Math.sin(this.timeCount / 40) * 300 + 500;
     this.y = Math.cos(this.timeCount / 40) * 100 + 100;
     this.timeCount++;
+    if (this.life <= 0) {
+      this.destroy();
+    }
   }
   render(ctx: CanvasRenderingContext2D): void {
     this.drawSprite(ctx, this.sprite, 100);

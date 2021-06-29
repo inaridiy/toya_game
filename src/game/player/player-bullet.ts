@@ -47,28 +47,32 @@ export class PlayerBulletB extends PlayerBullet {
     super(x, y, 5, sprite, 10);
   }
   public speedVec = new Vec2(0, -1);
-  public curvature = (1 * Math.PI) / 180;
+  public curvature = (2 * Math.PI) / 180;
 
   update(gameInfo: GameInfo, input: Input, scene: Scene) {
     const { actors } = scene;
-    const nearestEnemy = actors
-      .filter((actor) => actor.hasTag('enemy'))
-      .reduce((pv, actor) => {
+    const enemies = actors.filter((actor) => actor.hasTag('enemy'));
+    let speedAngle = Math.atan2(this.speedVec.y, this.speedVec.x);
+
+    if (enemies.length) {
+      const nearestEnemy = enemies.reduce((pv, actor) => {
         return this.coord.getDistance(pv.coord) >
           this.coord.getDistance(actor.coord)
           ? pv
           : actor;
       });
-    const enemyVec = new Vec2(nearestEnemy.x - this.x, nearestEnemy.y - this.y);
-    const cross = Vec2.cross(this.speedVec, enemyVec);
-    let speedAngle = Math.atan2(this.speedVec.y, this.speedVec.x);
+      const enemyVec = new Vec2(
+        nearestEnemy.x - this.x,
+        nearestEnemy.y - this.y
+      );
+      const cross = Vec2.cross(this.speedVec, enemyVec);
 
-    if (cross < 0) {
-      speedAngle -= this.curvature;
-    } else if (cross > 0) {
-      speedAngle += this.curvature;
+      if (cross < 0) {
+        speedAngle -= this.curvature;
+      } else if (cross > 0) {
+        speedAngle += this.curvature;
+      }
     }
-
     this.speedVec = new Vec2(
       Math.cos(speedAngle),
       Math.sin(speedAngle)
@@ -95,8 +99,8 @@ export class PlayerBulletC extends PlayerBullet {
   constructor(x: number, y: number, sprite: Sprite) {
     super(x, y, 5, sprite, 10);
   }
-  public speedVec = new Vec2(0, -1);
-  public curvature = (1 * Math.PI) / 180;
+  public speedVec = new Vec2(-1, -1);
+  public curvature = (2 * Math.PI) / 180;
 
   update(gameInfo: GameInfo, input: Input, scene: Scene) {
     const { actors } = scene;
@@ -108,7 +112,10 @@ export class PlayerBulletC extends PlayerBullet {
           ? pv
           : actor;
       });
-    this.speedVec = new Vec2(nearestEnemy.x - this.x, nearestEnemy.y - this.y);
+    this.speedVec = new Vec2(
+      nearestEnemy.x - this.x,
+      nearestEnemy.y - this.y
+    ).normalized.times(this.speed);
 
     this.x += this.speedVec.x;
     this.y += this.speedVec.y;

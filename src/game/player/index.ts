@@ -50,6 +50,7 @@ export class Player extends SpriteActor {
     if (isFireReader && input.getKey(' ')) {
       const bullet = new PlayerBulletB(this.x, this.y, this.sprites.bullet);
       this.spawnActor(bullet);
+
       this._timeCount = 0;
     }
   }

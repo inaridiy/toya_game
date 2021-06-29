@@ -17,6 +17,7 @@ assets
       window.innerHeight - 10,
       testScene
     );
+
     game.start();
   })
   .catch((e) => {
