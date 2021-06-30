@@ -1,7 +1,7 @@
 import { Enemy } from '.';
-import { Rectangle } from '../../base/actor/shape';
-import { Sprite } from '../../base/assets/sprite';
-import { AssetManager } from '../../base/assets/asset-loader';
+import { Rectangle } from '../../../base/actor/shape';
+import { Sprite } from '../../../base/assets/sprite';
+import { AssetManager } from '../../../base/assets/asset-loader';
 
 export class TestMob extends Enemy {
   constructor(x: number, y: number, assets: AssetManager) {

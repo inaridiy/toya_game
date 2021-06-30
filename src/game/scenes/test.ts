@@ -1,7 +1,7 @@
 import { Scene } from '../../base/game/scene';
 import { Player } from '../player';
 import { AssetManager } from '../../base/assets/asset-loader';
-import { TestMob } from '../enemy/test';
+import { TestMob } from '../enemy/character/test';
 
 export class Test extends Scene {
   constructor(assets: AssetManager) {
