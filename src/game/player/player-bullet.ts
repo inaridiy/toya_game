@@ -25,7 +25,7 @@ export abstract class PlayerBullet extends SpriteActor {
 }
 
 export class PlayerBulletA extends PlayerBullet {
-  constructor(x: number, y: number, sprite: Sprite) {
+  constructor(x: number, y: number, sprite: Sprite, scene: Scene) {
     const hitRadius = 5;
     const speed = 15;
 
@@ -43,7 +43,7 @@ export class PlayerBulletA extends PlayerBullet {
 }
 
 export class PlayerBulletB extends PlayerBullet {
-  constructor(x: number, y: number, sprite: Sprite) {
+  constructor(x: number, y: number, sprite: Sprite, scene: Scene) {
     super(x, y, 5, sprite, 10);
   }
   public speedVec = new Vec2(0, -1);
@@ -96,11 +96,10 @@ export class PlayerBulletB extends PlayerBullet {
 }
 
 export class PlayerBulletC extends PlayerBullet {
-  constructor(x: number, y: number, sprite: Sprite) {
+  constructor(x: number, y: number, sprite: Sprite, scene: Scene) {
     super(x, y, 5, sprite, 10);
   }
   public speedVec = new Vec2(-1, -1);
-  public curvature = (2 * Math.PI) / 180;
 
   update(gameInfo: GameInfo, input: Input, scene: Scene) {
     const { actors } = scene;

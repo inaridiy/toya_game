@@ -6,6 +6,7 @@ import { Vec2 } from '../../base/vector/vec';
 import { PlayerBulletB } from './player-bullet';
 import { AssetManager } from '../../base/assets/asset-loader';
 import { Rectangle } from '../../base/actor/shape';
+import { Scene } from '../../base/game/scene';
 
 export class Player extends SpriteActor {
   constructor(
@@ -27,9 +28,9 @@ export class Player extends SpriteActor {
   private _shotInterval = 10;
   public sprites: { main: Sprite; bullet: Sprite };
 
-  update(gameInfo: never, input: Input): void {
+  update(gameInfo: never, input: Input, scene: Scene): void {
     this._move(input);
-    this._shot(input);
+    this._shot(input, scene);
   }
 
   private _move(input: Input): void {
@@ -44,11 +45,16 @@ export class Player extends SpriteActor {
     this.y += speedVec.y;
   }
 
-  private _shot(input: Input): void {
+  private _shot(input: Input, scene: Scene): void {
     this._timeCount++;
     const isFireReader = this._timeCount > this._shotInterval;
     if (isFireReader && input.getKey(' ')) {
-      const bullet = new PlayerBulletB(this.x, this.y, this.sprites.bullet);
+      const bullet = new PlayerBulletB(
+        this.x,
+        this.y,
+        this.sprites.bullet,
+        scene
+      );
       this.spawnActor(bullet);
 
       this._timeCount = 0;
