@@ -22,6 +22,11 @@ export class Player extends SpriteActor {
       new Rectangle(0, 0, playerImg.width, playerImg.height)
     );
     this.sprites = { main: sprite, bullet: sprite };
+    this.addEventListener('hit', (e) => {
+      if (e.target.hasTag('enemy') || e.target.hasTag('enemyBullet')) {
+        this.destroy();
+      }
+    });
   }
 
   private _timeCount = 0;
@@ -49,14 +54,24 @@ export class Player extends SpriteActor {
     this._timeCount++;
     const isFireReader = this._timeCount > this._shotInterval;
     if (isFireReader && input.getKey(' ')) {
-      const bullet = new PlayerBulletB(
-        this.x,
-        this.y,
-        this.sprites.bullet,
-        scene
+      this.spawnActor(
+        new PlayerBulletB(
+          this.x,
+          this.y,
+          this.sprites.bullet,
+          new Vec2(-0.8, -1),
+          scene
+        )
       );
-      this.spawnActor(bullet);
-
+      this.spawnActor(
+        new PlayerBulletB(
+          this.x,
+          this.y,
+          this.sprites.bullet,
+          new Vec2(0.8, -1),
+          scene
+        )
+      );
       this._timeCount = 0;
     }
   }

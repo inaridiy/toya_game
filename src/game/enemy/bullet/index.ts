@@ -17,14 +17,14 @@ export class EnemyBullet extends SpriteActor {
   ) {
     super(x, y, hitBox, ['enemyBullet', ...tags]);
   }
-  update(info: GameInfo) {
+  update(info: GameInfo): void {
     this.x += this.velocityVec.x;
     this.y += this.velocityVec.y;
     if (!info.screenRect.isInside(this.coord)) {
       this.destroy();
     }
   }
-  render(ctx: CanvasRenderingContext2D) {
+  render(ctx: CanvasRenderingContext2D): void {
     this.drawSprite(
       ctx,
       this.sprite,

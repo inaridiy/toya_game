@@ -25,7 +25,7 @@ export abstract class PlayerBullet extends SpriteActor {
 }
 
 export class PlayerBulletA extends PlayerBullet {
-  constructor(x: number, y: number, sprite: Sprite, scene: Scene) {
+  constructor(x: number, y: number, sprite: Sprite) {
     const hitRadius = 5;
     const speed = 15;
 
@@ -43,36 +43,51 @@ export class PlayerBulletA extends PlayerBullet {
 }
 
 export class PlayerBulletB extends PlayerBullet {
-  constructor(x: number, y: number, sprite: Sprite, scene: Scene) {
-    super(x, y, 5, sprite, 10);
-  }
-  public speedVec = new Vec2(0, -1);
-  public curvature = (2 * Math.PI) / 180;
+  constructor(
+    x: number,
+    y: number,
+    sprite: Sprite,
+    direction: Vec2,
+    scene: Scene
+  ) {
+    super(x, y, 5, sprite, 15);
+    this.speedVec = direction;
+    this.target = this.getEnemy(scene);
 
-  update(gameInfo: GameInfo, input: Input, scene: Scene) {
-    const { actors } = scene;
-    const enemies = actors.filter((actor) => actor.hasTag('enemy'));
+    this.target?.addEventListener('destroy', () => {
+      this.target = this.getEnemy(scene);
+    });
+  }
+  public speedVec: Vec2;
+  public curvature = (3 * Math.PI) / 180;
+  public target: Actor | null;
+
+  getEnemy(scene: Scene): Actor | null {
+    const enemies = scene.actors.filter((actor) => actor.hasTag('enemy'));
+    return enemies.length
+      ? enemies.reduce((pv, actor) => {
+          return this.coord.getDistance(pv.coord) >
+            this.coord.getDistance(actor.coord)
+            ? pv
+            : actor;
+        })
+      : null;
+  }
+
+  update(gameInfo: GameInfo): void {
     let speedAngle = Math.atan2(this.speedVec.y, this.speedVec.x);
 
-    if (enemies.length) {
-      const nearestEnemy = enemies.reduce((pv, actor) => {
-        return this.coord.getDistance(pv.coord) >
-          this.coord.getDistance(actor.coord)
-          ? pv
-          : actor;
-      });
-      const enemyVec = new Vec2(
-        nearestEnemy.x - this.x,
-        nearestEnemy.y - this.y
-      );
-      const cross = Vec2.cross(this.speedVec, enemyVec);
+    if (this.target) {
+      const enemyVec = new Vec2(this.target.x - this.x, this.target.y - this.y);
+      const cross = Vec2.cross(this.speedVec.normalized, enemyVec.normalized);
 
-      if (cross < 0) {
+      if (cross < -0.5) {
         speedAngle -= this.curvature;
-      } else if (cross > 0) {
+      } else if (cross > 0.5) {
         speedAngle += this.curvature;
       }
     }
+
     this.speedVec = new Vec2(
       Math.cos(speedAngle),
       Math.sin(speedAngle)
@@ -85,44 +100,7 @@ export class PlayerBulletB extends PlayerBullet {
       this.destroy();
     }
   }
-  render(ctx: CanvasRenderingContext2D): void {
-    this.drawSprite(
-      ctx,
-      this.sprite,
-      40,
-      (Math.atan2(this.speedVec.y, this.speedVec.x) * 180) / Math.PI - 90
-    );
-  }
-}
 
-export class PlayerBulletC extends PlayerBullet {
-  constructor(x: number, y: number, sprite: Sprite, scene: Scene) {
-    super(x, y, 5, sprite, 10);
-  }
-  public speedVec = new Vec2(-1, -1);
-
-  update(gameInfo: GameInfo, input: Input, scene: Scene) {
-    const { actors } = scene;
-    const nearestEnemy = actors
-      .filter((actor) => actor.hasTag('enemy'))
-      .reduce((pv, actor) => {
-        return this.coord.getDistance(pv.coord) >
-          this.coord.getDistance(actor.coord)
-          ? pv
-          : actor;
-      });
-    this.speedVec = new Vec2(
-      nearestEnemy.x - this.x,
-      nearestEnemy.y - this.y
-    ).normalized.times(this.speed);
-
-    this.x += this.speedVec.x;
-    this.y += this.speedVec.y;
-
-    if (!gameInfo.screenRect.isInside(this.coord)) {
-      this.destroy();
-    }
-  }
   render(ctx: CanvasRenderingContext2D): void {
     this.drawSprite(
       ctx,

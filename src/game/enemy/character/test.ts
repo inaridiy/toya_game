@@ -18,7 +18,7 @@ export class TestMob extends Enemy {
   public sprite: Sprite;
   public timeCount = 0;
 
-  init(assets: AssetManager) {
+  init(assets: AssetManager): Sprite {
     const mobImg = assets.get('yugamin');
     const sprite = new Sprite(
       mobImg,
