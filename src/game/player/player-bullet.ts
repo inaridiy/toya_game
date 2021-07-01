@@ -58,8 +58,9 @@ export class PlayerBulletB extends PlayerBullet {
       this.target = this.getEnemy(scene);
     });
   }
+
   public speedVec: Vec2;
-  public curvature = (3 * Math.PI) / 180;
+  public curvature = (5 * Math.PI) / 180;
   public target: Actor | null;
 
   getEnemy(scene: Scene): Actor | null {

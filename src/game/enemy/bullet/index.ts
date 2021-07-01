@@ -4,7 +4,7 @@ import { Sprite } from '../../../base/assets/sprite';
 import { GameInfo } from '../../../base/event/event-dispatcher';
 import { Vec2 } from '../../../base/vector/vec';
 
-export class EnemyBullet extends SpriteActor {
+export class NormalBullet extends SpriteActor {
   constructor(
     x: number,
     y: number,

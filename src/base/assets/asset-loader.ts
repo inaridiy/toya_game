@@ -1,9 +1,10 @@
 type ImagePromise = Promise<HTMLImageElement>;
+export type assetMap = Map<string, HTMLImageElement>;
 
 export class AssetManager {
   constructor(public basePath: string) {}
   private _promises: ImagePromise[] = [];
-  private _assets: Map<string, HTMLImageElement> = new Map();
+  private _assets: assetMap = new Map();
 
   addImages(images: { name: string; url: string }[]): void {
     images.forEach(({ name, url }) => this.addImage(name, url));
@@ -24,6 +25,9 @@ export class AssetManager {
   }
   loadAll(): Promise<HTMLImageElement[]> {
     return Promise.all(this._promises);
+  }
+  get getAll(): assetMap {
+    return this._assets;
   }
   get(name: string): HTMLImageElement {
     return <HTMLImageElement>this._assets.get(name);

@@ -7,6 +7,7 @@ const canvas = document.getElementById('canvas') as HTMLCanvasElement;
 const assets = new AssetManager('/static/img/');
 assets.addImage('ago', '生首.png');
 assets.addImage('yugamin', 'yugamin.png');
+assets.addImage('tazumi', 'tazumi.png');
 assets
   .loadAll()
   .then(() => {

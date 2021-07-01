@@ -40,6 +40,7 @@ export class Player extends SpriteActor {
 
   private _move(input: Input): void {
     const movingDirection = new Vec2(0, 0);
+
     input.getKey('ArrowUp') || movingDirection.y++;
     input.getKey('ArrowDown') || movingDirection.y--;
     input.getKey('ArrowRight') || movingDirection.x--;
