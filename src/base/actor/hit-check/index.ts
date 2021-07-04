@@ -12,7 +12,9 @@ export const hitCheker = (shape: Shapes, other: Shapes): boolean => {
         ? hitCheckOfCircles(shape, other)
         : other.type === 'line'
         ? hitCheckOfCicleAndLine(shape, other)
-        : hitCheckOfCicleAndRectangle(shape, other);
+        : other.type === 'rectangle'
+        ? hitCheckOfCicleAndRectangle(shape, other)
+        : false;
     } else if (shape.type === 'line') {
       return other.type === 'circle'
         ? hitCheckOfCicleAndLine(other, shape)

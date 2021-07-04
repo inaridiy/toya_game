@@ -17,10 +17,7 @@ export class Player extends SpriteActor {
   ) {
     super(x, y, new Circle(x, y, 5), ['player', 'character']);
     const playerImg = assets.get('ago');
-    const sprite = new Sprite(
-      playerImg,
-      new Rectangle(0, 0, playerImg.width, playerImg.height)
-    );
+    const sprite = Sprite.get(playerImg);
     this.sprites = { main: sprite, bullet: sprite };
     this.addEventListener('hit', (e) => {
       if (e.target.hasTag('enemy') || e.target.hasTag('enemyBullet')) {
@@ -46,7 +43,9 @@ export class Player extends SpriteActor {
     input.getKey('ArrowRight') || movingDirection.x--;
     input.getKey('ArrowLeft') || movingDirection.x++;
 
-    const speedVec = movingDirection.normalized.times(this.speed);
+    const speed = input.getKey('Shift') ? this.speed / 2 : this.speed;
+
+    const speedVec = movingDirection.normalized.times(speed);
     this.x += speedVec.x;
     this.y += speedVec.y;
   }

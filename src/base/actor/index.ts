@@ -16,9 +16,9 @@ export abstract class Actor extends EventDispatcher<Actor> {
     super();
   }
   type: 'actor' = 'actor';
-
   abstract update(gameInfo: GameInfo, input: Input, scene: Scene): void;
   abstract render(ctx: CanvasRenderingContext2D): void;
+
   hasTag(tagName: string): boolean {
     return this.tags.includes(tagName);
   }

@@ -62,6 +62,8 @@ export class PlayerBulletB extends PlayerBullet {
   public speedVec: Vec2;
   public curvature = (5 * Math.PI) / 180;
   public target: Actor | null;
+  timeCount = 0;
+  limit = 180;
 
   getEnemy(scene: Scene): Actor | null {
     const enemies = scene.actors.filter((actor) => actor.hasTag('enemy'));
@@ -77,8 +79,9 @@ export class PlayerBulletB extends PlayerBullet {
 
   update(gameInfo: GameInfo): void {
     let speedAngle = Math.atan2(this.speedVec.y, this.speedVec.x);
+    this.timeCount++;
 
-    if (this.target) {
+    if (this.target && this.timeCount < this.limit) {
       const enemyVec = new Vec2(this.target.x - this.x, this.target.y - this.y);
       const cross = Vec2.cross(this.speedVec.normalized, enemyVec.normalized);
 

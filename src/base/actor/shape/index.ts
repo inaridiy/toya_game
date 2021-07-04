@@ -2,11 +2,21 @@ import { Coordinate } from './coordinate';
 import { hitCheker } from '../hit-check';
 
 export type ShapeTypes = 'circle' | 'line' | 'rectangle';
-export type Shapes = Circle | Line | Rectangle;
+export type Shapes = Circle | Line | Rectangle | None;
 
 export interface Shape extends Coordinate {
   readonly type: ShapeTypes;
   hitTest: (other: Shapes) => boolean;
+}
+
+export class None extends Coordinate {
+  constructor() {
+    super(0, 0);
+  }
+  type: 'none' = 'none';
+  hitTest(other: Shapes): boolean {
+    return hitCheker(this, other);
+  }
 }
 
 export class Circle extends Coordinate implements Shape {
