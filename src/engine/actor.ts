@@ -1,10 +1,9 @@
-import { EventDispatcher } from '../event/event-dispatcher';
-import { Shapes } from './shape';
-import { Coordinate } from './shape/coordinate';
-import { Input } from '../event/input';
-import { GameEvent, GameInfo } from '../event/event-dispatcher';
-import { Sprite } from '../assets/sprite';
-import { Scene } from '../game/scene';
+import { EventDispatcher, GameEvent } from './event/event-dispatcher';
+import { Shapes, Coord } from './shape';
+import { Sprite } from './asset';
+import { Input } from './event/input';
+import { GameInfo } from './game/info';
+import { Scene } from './game/scene';
 
 export abstract class Actor extends EventDispatcher<Actor> {
   constructor(
@@ -15,10 +14,8 @@ export abstract class Actor extends EventDispatcher<Actor> {
   ) {
     super();
   }
-  type: 'actor' = 'actor';
   abstract update(gameInfo: GameInfo, input: Input, scene: Scene): void;
   abstract render(ctx: CanvasRenderingContext2D): void;
-
   hasTag(tagName: string): boolean {
     return this.tags.includes(tagName);
   }
@@ -43,9 +40,12 @@ export abstract class Actor extends EventDispatcher<Actor> {
     this._y = n;
     this.hitBox.y = n;
   }
-
-  get coord(): Coordinate {
-    return new Coordinate(this._x, this._y);
+  get coord(): Coord {
+    return new Coord(this._x, this._y);
+  }
+  set coord(coord: Coord) {
+    this.x = coord.x;
+    this.y = coord.y;
   }
 }
 

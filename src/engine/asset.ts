@@ -1,3 +1,5 @@
+import { Rect } from './shape';
+
 type ImagePromise = Promise<HTMLImageElement>;
 export type assetMap = Map<string, HTMLImageElement>;
 
@@ -31,5 +33,12 @@ export class AssetManager {
   }
   get(name: string): HTMLImageElement {
     return <HTMLImageElement>this._assets.get(name);
+  }
+}
+
+export class Sprite {
+  constructor(public image: HTMLImageElement, public rect: Rect) {}
+  static get(img: HTMLImageElement) {
+    return new Sprite(img, new Rect(0, 0, img.width, img.height));
   }
 }

@@ -1,6 +1,3 @@
-import { Scene } from '../game/scene';
-import { Rectangle } from '../actor/shape/index';
-
 type cb<T> = (event: GameEvent<T>) => void;
 type sceneEvents = 'changescene';
 type actorEvents = 'spawnactor' | 'destroy' | 'hit';
@@ -24,12 +21,4 @@ export class EventDispatcher<T> {
 }
 export class GameEvent<T> {
   constructor(public target: T) {}
-}
-
-export class GameInfo {
-  constructor(
-    public screenRect: Rectangle,
-    public currentScene: Scene,
-    public count: number
-  ) {}
 }
