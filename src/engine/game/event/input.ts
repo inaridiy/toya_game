@@ -1,6 +1,37 @@
+import { Vec2 } from '../../shape/vector';
+
 type Keymap = Map<string, boolean>;
 
+export class InputReceiver {
+  private _keyinputReceiver = new KeyInputReceiver();
+
+  getInput() {
+    const ketInput = this._keyinputReceiver.getInput();
+    const direction = this.getDirection(ketInput);
+    const [isShot, isSlow] = [ketInput.getKey(' '), ketInput.getKey('Shift')];
+
+    return new Input(direction, isShot, isSlow);
+  }
+
+  getDirection(ketInput: KeyInput): Vec2 {
+    let direction = new Vec2(0, 0);
+    ketInput.getKey('ArrowUp') || direction.y++;
+    ketInput.getKey('ArrowDown') || direction.y--;
+    ketInput.getKey('ArrowRight') || direction.x--;
+    ketInput.getKey('ArrowLeft') || direction.x++;
+    return direction.normalized;
+  }
+}
+
 export class Input {
+  constructor(
+    public direction: Vec2,
+    public isShot: boolean,
+    public isSlow: boolean
+  ) {}
+}
+
+class KeyInput {
   constructor(public keyMap: Keymap, public preKeyMap: Keymap) {}
   private _getKeyFromMap(keyName: string, map: Keymap): boolean {
     return map.has(keyName) ? <boolean>map.get(keyName) : false;
@@ -23,7 +54,7 @@ export class Input {
   }
 }
 
-export class InputReceiver {
+class KeyInputReceiver {
   public _keyMap: Keymap = new Map();
   public _prevKeyMap: Keymap = new Map();
 
@@ -36,11 +67,11 @@ export class InputReceiver {
     );
   }
 
-  getInput(): Input {
+  getInput(): KeyInput {
     const keyMap = new Map(this._keyMap);
     const prevKeyMap = new Map(this._prevKeyMap);
     this._prevKeyMap = new Map(this._keyMap);
 
-    return new Input(keyMap, prevKeyMap);
+    return new KeyInput(keyMap, prevKeyMap);
   }
 }

@@ -8,11 +8,12 @@ export class AssetManager {
   private _promises: ImagePromise[] = [];
   private _assets: assetMap = new Map();
 
-  addImages(images: { name: string; url: string }[]): void {
+  addImages(images: { name: string; url: string }[]): AssetManager {
     images.forEach(({ name, url }) => this.addImage(name, url));
+    return this;
   }
 
-  addImage(name: string, url: string): void {
+  addImage(name: string, url: string): AssetManager {
     const img = new Image();
     img.src = this.basePath + url;
 
@@ -24,6 +25,7 @@ export class AssetManager {
       img.addEventListener('error', (e) => reject(e));
     });
     this._promises.push(promise);
+    return this;
   }
   loadAll(): Promise<HTMLImageElement[]> {
     return Promise.all(this._promises);
@@ -34,11 +36,15 @@ export class AssetManager {
   get(name: string): HTMLImageElement {
     return <HTMLImageElement>this._assets.get(name);
   }
+  sprite(name: string): Sprite {
+    const image = this.get(name);
+    return Sprite.get(image);
+  }
 }
 
 export class Sprite {
   constructor(public image: HTMLImageElement, public rect: Rect) {}
-  static get(img: HTMLImageElement) {
+  static get(img: HTMLImageElement): Sprite {
     return new Sprite(img, new Rect(0, 0, img.width, img.height));
   }
 }

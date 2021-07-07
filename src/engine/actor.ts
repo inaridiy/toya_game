@@ -1,9 +1,9 @@
-import { EventDispatcher, GameEvent } from './event/event-dispatcher';
+import { EventDispatcher, GameEvent } from './game/event/event-dispatcher';
 import { Shapes, Coord } from './shape';
 import { Sprite } from './asset';
-import { Input } from './event/input';
+import { Input } from './game/event/input';
 import { GameInfo } from './game/info';
-import { Scene } from './game/scene';
+import { Scene, updateObj } from './game/scene';
 
 export abstract class Actor extends EventDispatcher<Actor> {
   constructor(
@@ -14,8 +14,8 @@ export abstract class Actor extends EventDispatcher<Actor> {
   ) {
     super();
   }
-  abstract update(gameInfo: GameInfo, input: Input, scene: Scene): void;
-  abstract render(ctx: CanvasRenderingContext2D): void;
+  abstract update(obj: updateObj): void;
+  // abstract render(ctx: CanvasRenderingContext2D): void;
   hasTag(tagName: string): boolean {
     return this.tags.includes(tagName);
   }
