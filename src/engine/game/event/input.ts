@@ -5,7 +5,7 @@ type Keymap = Map<string, boolean>;
 export class InputReceiver {
   private _keyinputReceiver = new KeyInputReceiver();
 
-  getInput() {
+  getInput(): Input {
     const ketInput = this._keyinputReceiver.getInput();
     const direction = this.getDirection(ketInput);
     const [isShot, isSlow] = [ketInput.getKey(' '), ketInput.getKey('Shift')];
@@ -14,7 +14,7 @@ export class InputReceiver {
   }
 
   getDirection(ketInput: KeyInput): Vec2 {
-    let direction = new Vec2(0, 0);
+    const direction = new Vec2(0, 0);
     ketInput.getKey('ArrowUp') || direction.y++;
     ketInput.getKey('ArrowDown') || direction.y--;
     ketInput.getKey('ArrowRight') || direction.x--;

@@ -1,8 +1,8 @@
-import { SpriteActor, Actor } from '../../engine/actor';
-import { Sprite } from '../../engine/asset';
-import { Circle } from '../../engine/shape';
-import { Vec2 } from '../../engine/shape/vector';
-import { Scene, updateObj } from '../../engine/game/scene';
+import { SpriteActor, Actor } from '../../../engine/actor';
+import { Sprite } from '../../../engine/asset';
+import { Circle } from '../../../engine/shape';
+import { Vec2 } from '../../../engine/shape/vector';
+import { Scene, updateObj } from '../../../engine/game/scene';
 
 export abstract class PlayerBullet extends SpriteActor {
   constructor(x: number, y: number, radius: number, public sprite: Sprite) {

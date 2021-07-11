@@ -4,6 +4,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
 const BundleAnalyzerPlugin =
   require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+const ImageminPlugin = require('imagemin-webpack-plugin').default;
 
 const config = {
   mode: 'development',
@@ -31,6 +32,7 @@ const config = {
     new HtmlWebpackPlugin({
       template: path.join(__dirname, 'src/html/index.html'),
     }),
+
     new CopyPlugin({
       patterns: [
         {
@@ -54,6 +56,23 @@ module.exports = (env, argv) => {
   }
   if (argv.analyze) {
     config.plugins.push(new BundleAnalyzerPlugin());
+    config.plugins.push(
+      new ImageminPlugin({
+        test: /\.(jpe?g|png|gif|svg)$/i,
+        pngquant: {
+          quality: '65-80',
+        },
+        gifsicle: {
+          interlaced: false,
+          optimizationLevel: 1,
+          colors: 256,
+        },
+        svgo: {},
+        pngquant: {
+          quality: '70-85',
+        },
+      })
+    );
   }
   return config;
 };

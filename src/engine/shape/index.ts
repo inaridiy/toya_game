@@ -1,4 +1,4 @@
-export type Shapes = Circle | Line | Rect;
+export type Shapes = Circle | Line | Rect | None;
 
 export class Coord {
   constructor(public x: number, public y: number) {}
@@ -55,4 +55,8 @@ export class Rect extends Coord {
       c.y > this.y - this.height / 2
     );
   }
+}
+
+export class None extends Coord {
+  type: 'none' = 'none';
 }

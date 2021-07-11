@@ -1,10 +1,10 @@
-import { SpriteActor } from '../../engine/actor';
-import { AssetManager, Sprite } from '../../engine/asset';
-import { Circle } from '../../engine/shape';
-import { Input } from '../../engine/game/event/input';
-import { Scene, updateObj } from '../../engine/game/scene';
+import { SpriteActor } from '../../../engine/actor';
+import { AssetManager, Sprite } from '../../../engine/asset';
+import { Circle } from '../../../engine/shape';
+import { Input } from '../../../engine/game/event/input';
+import { Scene, updateObj } from '../../../engine/game/scene';
 import { PlayerBulletB } from './player-bullet';
-import { Vec2 } from '../../engine/shape/vector';
+import { Vec2 } from '../../../engine/shape/vector';
 
 export class Player extends SpriteActor {
   constructor(x: number, y: number, assets: AssetManager) {

@@ -1,9 +1,8 @@
 import { EventDispatcher, GameEvent } from './game/event/event-dispatcher';
 import { Shapes, Coord } from './shape';
 import { Sprite } from './asset';
-import { Input } from './game/event/input';
-import { GameInfo } from './game/info';
-import { Scene, updateObj } from './game/scene';
+
+import { updateObj } from './game/scene';
 
 export abstract class Actor extends EventDispatcher<Actor> {
   constructor(

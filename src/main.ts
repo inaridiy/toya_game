@@ -7,7 +7,7 @@ const canvas = document.getElementById('canvas') as HTMLCanvasElement;
 const assets = new AssetManager('/static/img/');
 
 assets
-  .addImage('ago', '生首.png')
+  .addImage('ago', 'namakubi.png')
   .loadAll()
   .then(() => {
     const testScene = new Test(assets);

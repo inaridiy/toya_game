@@ -27,6 +27,8 @@
     "eslint-config-prettier": "^8.3.0",
     "html-webpack-plugin": "^5.3.1",
     "husky": "4",
+    "imagemin-pngquant": "^9.0.2",
+    "imagemin-webpack-plugin": "^2.4.2",
     "jest": "^27.0.4",
     "prettier": "^2.3.1",
     "ts-jest": "^27.0.3",
