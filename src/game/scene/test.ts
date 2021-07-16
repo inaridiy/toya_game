@@ -1,7 +1,7 @@
 import { AssetManager } from '../../engine/asset';
 import { Scene } from '../../engine/game/scene';
 import { Player } from '../actor/player';
-import { BezierTest, BezierAcotr } from '../actor/test';
+import { BezierAcotr } from '../actor/test';
 
 export class Test extends Scene {
   constructor(assets: AssetManager) {

@@ -14,32 +14,6 @@ export abstract class PlayerBullet extends SpriteActor {
       }
     });
   }
-}
-
-export class PlayerBulletB extends PlayerBullet {
-  constructor(
-    x: number,
-    y: number,
-    sprite: Sprite,
-    direction: Vec2,
-    scene: Scene
-  ) {
-    super(x, y, 5, sprite);
-    this.speedVec = direction;
-    this.target = this.getEnemy(scene);
-
-    this.target?.addEventListener('destroy', () => {
-      this.target = this.getEnemy(scene);
-    });
-  }
-
-  public speedVec: Vec2;
-  public curvature = (5 * Math.PI) / 180;
-  public target: Actor | null;
-  public speed = 15;
-  timeCount = 0;
-  limit = 180;
-
   getEnemy(scene: Scene): Actor | null {
     const enemies = scene.actors.filter((actor) => actor.hasTag('enemy'));
     return enemies.length
@@ -51,6 +25,31 @@ export class PlayerBulletB extends PlayerBullet {
         })
       : null;
   }
+}
+
+export class PlayerBulletB extends PlayerBullet {
+  constructor(
+    x: number,
+    y: number,
+    sprite: Sprite,
+    direction: Vec2,
+    scene: Scene
+  ) {
+    super(x, y, 15, sprite);
+    this.speedVec = direction;
+    this.target = this.getEnemy(scene);
+
+    this.target?.addEventListener('destroy', () => {
+      this.target = this.getEnemy(scene);
+    });
+  }
+
+  public speedVec: Vec2;
+  public curvature = (10 * Math.PI) / 180;
+  public target: Actor | null;
+  public speed = 15;
+  timeCount = 0;
+  limit = 180;
 
   update({ gameInfo, ctx }: updateObj): void {
     let speedAngle = Math.atan2(this.speedVec.y, this.speedVec.x);
@@ -81,6 +80,51 @@ export class PlayerBulletB extends PlayerBullet {
     this.render(ctx);
   }
 
+  render(ctx: CanvasRenderingContext2D): void {
+    this.drawSprite(
+      ctx,
+      this.sprite,
+      40,
+      (Math.atan2(this.speedVec.y, this.speedVec.x) * 180) / Math.PI - 90
+    );
+  }
+}
+export class PlayerBulletC extends PlayerBullet {
+  constructor(
+    x: number,
+    y: number,
+    sprite: Sprite,
+    direction: Vec2,
+    scene: Scene
+  ) {
+    super(x, y, 15, sprite);
+    this.speedVec = direction;
+    this.target = this.getEnemy(scene);
+
+    this.target?.addEventListener('destroy', () => {
+      this.target = this.getEnemy(scene);
+    });
+  }
+
+  public speedVec: Vec2;
+  public curvature = (5 * Math.PI) / 180;
+  public target: Actor | null;
+  public speed = 15;
+
+  update({ gameInfo, ctx }: updateObj): void {
+    if (this.target) {
+      const enemyVec = new Vec2(this.target.x - this.x, this.target.y - this.y);
+      this.speedVec = enemyVec.normalized.times(this.speed);
+
+      this.x += this.speedVec.x;
+      this.y += this.speedVec.y;
+
+      if (!gameInfo.screenRect.isInside(this.coord)) {
+        this.destroy();
+      }
+      this.render(ctx);
+    }
+  }
   render(ctx: CanvasRenderingContext2D): void {
     this.drawSprite(
       ctx,
