@@ -9,12 +9,13 @@ import { Vec2 } from '../../../engine/shape/vector';
 export class Player extends SpriteActor {
   constructor(x: number, y: number, assets: AssetManager) {
     super(x, y, new Circle(x, y, 10), ['player', 'character']);
-    const playerSprite = assets.sprite('ago');
-    this.sprites = { main: playerSprite, bullet: playerSprite };
+    const playerSprite = assets.sprite('kubi');
+    const bulletSprite = assets.sprite('ago');
+    this.sprites = { main: playerSprite, bulletB: bulletSprite };
   }
   private _timeCount = 0;
   private _shotInterval = 10;
-  public sprites: { main: Sprite; bullet: Sprite };
+  public sprites: { main: Sprite; bulletB: Sprite };
   public speed = 10;
 
   update({ input, ctx, scene }: updateObj): void {
@@ -37,7 +38,7 @@ export class Player extends SpriteActor {
         new PlayerBulletB(
           this.x,
           this.y,
-          this.sprites.bullet,
+          this.sprites.bulletB,
           new Vec2(-0.8, -1),
           scene
         )
@@ -46,7 +47,7 @@ export class Player extends SpriteActor {
         new PlayerBulletB(
           this.x,
           this.y,
-          this.sprites.bullet,
+          this.sprites.bulletB,
           new Vec2(0.8, -1),
           scene
         )

@@ -81,15 +81,3 @@ export abstract class SpriteActor extends Actor {
     ctx.restore();
   }
 }
-
-export abstract class TextSprite extends Actor {
-  constructor(x: number, y: number, hitBox: Shapes, tags: string[] = []) {
-    super(x, y, hitBox, tags);
-  }
-  drawTest(ctx: CanvasRenderingContext2D, text: string, degree: number): void {
-    ctx.save();
-    ctx.translate(this.x, this.y);
-    ctx.rotate((degree * Math.PI) / 180);
-    ctx.restore();
-  }
-}
