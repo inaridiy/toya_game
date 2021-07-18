@@ -1,11 +1,17 @@
 import { SpriteActor, Actor } from '../../../engine/actor';
 import { Sprite } from '../../../engine/asset';
-import { Circle } from '../../../engine/shape';
+import { Circle, Coord } from '../../../engine/shape';
 import { Vec2 } from '../../../engine/shape/vector';
 import { Scene, updateObj } from '../../../engine/game/scene';
 
 export abstract class PlayerBullet extends SpriteActor {
-  constructor(x: number, y: number, radius: number, public sprite: Sprite) {
+  constructor(
+    x: number,
+    y: number,
+    radius: number,
+    public damage: number,
+    public sprite: Sprite
+  ) {
     super(x, y, new Circle(x, y, radius), ['playerBullet']);
 
     this.addEventListener('hit', (e) => {
@@ -14,6 +20,7 @@ export abstract class PlayerBullet extends SpriteActor {
       }
     });
   }
+
   getEnemy(scene: Scene): Actor | null {
     const enemies = scene.actors.filter((actor) => actor.hasTag('enemy'));
     return enemies.length
@@ -27,19 +34,13 @@ export abstract class PlayerBullet extends SpriteActor {
   }
 }
 export class PlayerBulletA extends PlayerBullet {
-  constructor(
-    x: number,
-    y: number,
-    sprite: Sprite,
-
-    scene: Scene
-  ) {
-    super(x, y, 15, sprite);
-    this.speedVec = new Vec2(0, 1).normalized.times(this.speed);
+  constructor(coord: Coord, vec: Vec2, sprite: Sprite) {
+    super(coord.x, coord.y, 15, 5, sprite);
+    this.speedVec = vec.times(this.speed);
   }
 
   public speedVec: Vec2;
-  public speed = 15;
+  public speed = 20;
 
   update({ gameInfo, ctx }: updateObj): void {
     this.x += this.speedVec.x;
@@ -62,14 +63,8 @@ export class PlayerBulletA extends PlayerBullet {
 }
 
 export class PlayerBulletB extends PlayerBullet {
-  constructor(
-    x: number,
-    y: number,
-    sprite: Sprite,
-    direction: Vec2,
-    scene: Scene
-  ) {
-    super(x, y, 15, sprite);
+  constructor(coord: Coord, sprite: Sprite, direction: Vec2, scene: Scene) {
+    super(coord.x, coord.y, 15, 3, sprite);
     this.speedVec = direction;
     this.target = this.getEnemy(scene);
 

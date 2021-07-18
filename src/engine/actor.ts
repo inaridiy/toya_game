@@ -15,6 +15,7 @@ export abstract class Actor extends EventDispatcher<Actor> {
   }
   abstract update(obj: updateObj): void;
   // abstract render(ctx: CanvasRenderingContext2D): void;
+
   hasTag(tagName: string): boolean {
     return this.tags.includes(tagName);
   }

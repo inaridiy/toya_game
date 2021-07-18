@@ -15,10 +15,11 @@ export class InputReceiver {
 
   getDirection(ketInput: KeyInput): Vec2 {
     const direction = new Vec2(0, 0);
-    ketInput.getKey('ArrowUp') || direction.y++;
-    ketInput.getKey('ArrowDown') || direction.y--;
+
     ketInput.getKey('ArrowRight') || direction.x--;
     ketInput.getKey('ArrowLeft') || direction.x++;
+    ketInput.getKey('ArrowUp') || direction.y++;
+    ketInput.getKey('ArrowDown') || direction.y--;
     return direction.normalized;
   }
 }

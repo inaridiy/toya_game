@@ -34,6 +34,10 @@ export class Vec2 {
     const { x, y, magnitude } = this;
     return magnitude === 0 ? this : new Vec2(x / magnitude, y / magnitude);
   }
+  get yReversal(): Vec2 {
+    this.y *= -1;
+    return this;
+  }
   static add(v1: Vec2, v2: Vec2): Vec2 {
     return v1.clone().add(v2);
   }
@@ -49,5 +53,12 @@ export class Vec2 {
   }
   static cross(v1: Vec2, v2: Vec2): number {
     return v1.x * v2.y - v1.y * v2.x;
+  }
+  static radian(radian: number) {
+    return new Vec2(Math.cos(radian), Math.sin(radian));
+  }
+  static degree(degree: number) {
+    const radian = (degree / 180) * Math.PI;
+    return this.radian(radian);
   }
 }

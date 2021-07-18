@@ -1,15 +1,14 @@
 import { AssetManager } from './engine/asset';
 import { Game } from './engine/game/game';
 import { Test } from './game/scene/test';
+import { playerImages } from './const';
 
 const canvas = document.getElementById('canvas') as HTMLCanvasElement;
 
 const assets = new AssetManager('/static/img/');
 
 assets
-  .addImage('kubi', 'player/namakubi.png')
-  .addImage('sinai', 'player/sinai.png')
-  .addImage('ago', 'player/ago.png')
+  .addImages(playerImages)
   .loadAll()
   .then(() => {
     const testScene = new Test(assets);
