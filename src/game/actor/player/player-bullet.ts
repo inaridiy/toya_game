@@ -53,12 +53,14 @@ export class PlayerBulletA extends PlayerBullet {
   }
 
   render(ctx: CanvasRenderingContext2D): void {
+    ctx.globalAlpha = 0.7;
     this.drawSprite(
       ctx,
       this.sprite,
       30,
       (Math.atan2(this.speedVec.y, this.speedVec.x) * 180) / Math.PI + 90
     );
+    ctx.globalAlpha = 1;
   }
 }
 
@@ -110,11 +112,13 @@ export class PlayerBulletB extends PlayerBullet {
   }
 
   render(ctx: CanvasRenderingContext2D): void {
+    ctx.globalAlpha = 0.7;
     this.drawSprite(
       ctx,
       this.sprite,
       40,
       (Math.atan2(this.speedVec.y, this.speedVec.x) * 180) / Math.PI - 90
     );
+    ctx.globalAlpha = 1;
   }
 }

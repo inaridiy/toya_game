@@ -14,6 +14,7 @@ export class Player extends SpriteActor {
       bulletA: assets.sprite('sinai'),
       bulletB: assets.sprite('ago'),
     };
+    console.log(this);
   }
   private _timeCountA = 0;
   private _timeCountB = 0;

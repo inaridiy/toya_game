@@ -23,6 +23,7 @@ export class Vec2 {
     this.y *= num;
     return this;
   }
+
   get inverse(): Vec2 {
     return this.clone().times(-1);
   }

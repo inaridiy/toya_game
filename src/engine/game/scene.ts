@@ -14,6 +14,7 @@ export type updateObj = {
 export class Scene extends EventDispatcher<Scene> {
   public actors: Actor[] = [];
   private _destroyedActors: Actor[] = [];
+  public debug = false;
 
   update(
     gameInfo: GameInfo,
@@ -22,6 +23,7 @@ export class Scene extends EventDispatcher<Scene> {
   ): void {
     this._updateAll(gameInfo, input, this, ctx);
     this._hitTest();
+    this.debug && this._debug(ctx);
     this._disposeDestroyedActors();
     // this._renderAll(ctx);
   }
@@ -73,5 +75,10 @@ export class Scene extends EventDispatcher<Scene> {
   private _disposeDestroyedActors(): void {
     this._destroyedActors.forEach((actor) => this.remove(actor));
     this._destroyedActors = [];
+  }
+  private _debug(ctx: CanvasRenderingContext2D) {
+    this.actors.map((actor) => {
+      actor.hitBox.stroke(ctx);
+    });
   }
 }
