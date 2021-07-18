@@ -17,6 +17,7 @@ export class Player extends SpriteActor {
   private _shotInterval = 10;
   public sprites: { main: Sprite; bulletB: Sprite };
   public speed = 10;
+  public power = 0;
 
   update({ input, ctx, scene }: updateObj): void {
     this._move(input);
@@ -36,7 +37,7 @@ export class Player extends SpriteActor {
     if (isFireReader && input.isShot) {
       this.spawnActor(
         new PlayerBulletB(
-          this.x,
+          this.x - 100,
           this.y,
           this.sprites.bulletB,
           new Vec2(-0.8, -1),
@@ -45,7 +46,7 @@ export class Player extends SpriteActor {
       );
       this.spawnActor(
         new PlayerBulletB(
-          this.x,
+          this.x + 100,
           this.y,
           this.sprites.bulletB,
           new Vec2(0.8, -1),
@@ -57,6 +58,6 @@ export class Player extends SpriteActor {
   }
 
   render(ctx: CanvasRenderingContext2D): void {
-    this.drawSprite(ctx, this.sprites.main, 100, 0);
+    this.drawSprite(ctx, this.sprites.main, 100, 180);
   }
 }

@@ -17,7 +17,7 @@ export class BezierAcotr extends SpriteActor {
     new Coord(this.coord.x + 400, this.coord.y + 600),
     new Coord(this.coord.x + 500, this.coord.y)
   );
-  update({ ctx }: updateObj) {
+  update({ ctx, gameInfo }: updateObj) {
     this.timeCount++;
     const l = 1 / 300;
     this.coord = this.bezier.getCoord(this.timeCount * l);
@@ -32,6 +32,9 @@ export class BezierAcotr extends SpriteActor {
       ctx.fillStyle = 'rgba(255,0,0,0.8)';
       ctx.fill();
       ctx.stroke();
+    }
+    if (!gameInfo.screenRect.isInside(this.coord)) {
+      this.destroy();
     }
   }
 }
