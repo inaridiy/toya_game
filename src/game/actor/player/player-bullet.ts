@@ -56,8 +56,8 @@ export class PlayerBulletA extends PlayerBullet {
     this.drawSprite(
       ctx,
       this.sprite,
-      40,
-      (Math.atan2(this.speedVec.y, this.speedVec.x) * 180) / Math.PI - 90
+      30,
+      (Math.atan2(this.speedVec.y, this.speedVec.x) * 180) / Math.PI + 90
     );
   }
 }

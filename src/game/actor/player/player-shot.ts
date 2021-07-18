@@ -16,10 +16,17 @@ export class ShotA extends PlayerShot {
     super(x, y, power);
   }
 
-  public angleBetween = 15;
-  update(obj: updateObj) {
+  update({ input }: updateObj) {
     const p = this.power;
-    const qty = Math.ceil(this.power / 15);
+    const qty = Math.ceil(p / 15);
+    const angleBetween = input.isSlow ? 3 : 10;
+    const totalAngle = (qty - 1) * angleBetween;
+    const rightmostAngle = 90 - totalAngle / 2;
+
+    for (let i = 0; i < qty; i++) {
+      this.spawnBullet(this.coord, rightmostAngle + angleBetween * i);
+    }
+    this.destroy();
   }
   spawnBullet(coord: Coord, dgree: number): void {
     this.spawnActor(
