@@ -2,7 +2,7 @@ import { SpriteActor } from '../../../engine/actor';
 import { AssetManager, Sprite } from '../../../engine/asset';
 import { Circle } from '../../../engine/shape';
 import { Input } from '../../../engine/game/event/input';
-import { Scene, updateObj } from '../../../engine/game/scene';
+import { updateObj } from '../../../engine/game/scene';
 import { ShotA, ShotB } from './player-shot';
 
 export class Player extends SpriteActor {

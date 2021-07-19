@@ -1,6 +1,6 @@
 import { Actor } from '../../../engine/actor';
 import { Sprite } from '../../../engine/asset';
-import { Scene, updateObj } from '../../../engine/game/scene';
+import { updateObj } from '../../../engine/game/scene';
 import { Coord, None } from '../../../engine/shape';
 import { Vec2 } from '../../../engine/shape/vector';
 import { PlayerBulletA, PlayerBulletB } from './player-bullet';
@@ -16,7 +16,7 @@ export class ShotA extends PlayerShot {
     super(x, y, power);
   }
 
-  update({ input }: updateObj) {
+  update({ input }: updateObj): void {
     const p = this.power;
     const qty = Math.ceil(p / 15);
     const angleBetween = input.isSlow ? 3 : 10;
@@ -41,7 +41,7 @@ export class ShotB extends PlayerShot {
   }
 
   public angleBetween = 30;
-  update(obj: updateObj) {
+  update(obj: updateObj): void {
     const [lCoord, lAngle] = obj.input.isSlow
       ? [new Coord(this.x, this.y - 100), 90]
       : [new Coord(this.x - 100, this.y), 120];

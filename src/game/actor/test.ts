@@ -17,7 +17,7 @@ export class BezierAcotr extends SpriteActor {
     new Coord(this.coord.x + 400, this.coord.y + 600),
     new Coord(this.coord.x + 500, this.coord.y)
   );
-  update({ ctx, gameInfo }: updateObj) {
+  update({ ctx, gameInfo }: updateObj): void {
     this.timeCount++;
     const l = 1 / 300;
     this.coord = this.bezier.getCoord(this.timeCount * l);

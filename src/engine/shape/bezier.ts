@@ -35,5 +35,4 @@ export class Bezier {
 
     return coord;
   }
-  getY(y: number) {}
 }
