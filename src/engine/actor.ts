@@ -1,5 +1,5 @@
 import { EventDispatcher, GameEvent } from './game/event/event-dispatcher';
-import { Shapes, Coord } from './shape';
+import { Shapes, Coord, Rect } from './shape';
 import { Sprite } from './asset';
 
 import { updateObj } from './game/scene';
@@ -9,9 +9,12 @@ export abstract class Actor extends EventDispatcher<Actor> {
     private _x: number,
     private _y: number,
     public hitBox: Shapes,
-    public tags: string[] = []
+    public tags: string[] = [],
+    centerRect?: Rect
   ) {
     super();
+    this.x += centerRect?.x ?? 0;
+    this.y += centerRect?.y ?? 0;
   }
   abstract update(obj: updateObj): void;
   // abstract render(ctx: CanvasRenderingContext2D): void;
@@ -50,8 +53,14 @@ export abstract class Actor extends EventDispatcher<Actor> {
 }
 
 export abstract class SpriteActor extends Actor {
-  constructor(x: number, y: number, hitBox: Shapes, tags: string[] = []) {
-    super(x, y, hitBox, tags);
+  constructor(
+    x: number,
+    y: number,
+    hitBox: Shapes,
+    tags: string[] = [],
+    center?: Rect
+  ) {
+    super(x, y, hitBox, tags, center);
   }
 
   drawSprite(

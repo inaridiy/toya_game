@@ -34,7 +34,7 @@ export class BezierAcotr extends SpriteActor {
       ctx.stroke();
     }
     if (!gameInfo.screenRect.isInside(this.coord)) {
-      this.destroy();
+      this.tags = [];
     }
   }
 }

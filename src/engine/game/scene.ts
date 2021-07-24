@@ -10,21 +10,27 @@ export type updateObj = {
   scene: Scene;
   ctx: CanvasRenderingContext2D;
 };
+type insertFunc = (obj: updateObj) => void;
 
 export class Scene extends EventDispatcher<Scene> {
   public actors: Actor[] = [];
   private _destroyedActors: Actor[] = [];
   public debug = false;
+  public beforeFuncs: insertFunc[] = [];
+  public afterFuncs: insertFunc[] = [];
 
   update(
     gameInfo: GameInfo,
     input: Input,
     ctx: CanvasRenderingContext2D
   ): void {
-    this._updateAll(gameInfo, input, this, ctx);
+    const updateObj = { gameInfo, input, scene: this, ctx };
+    this.beforeFuncs.forEach((func) => func(updateObj));
+    this._updateAll(updateObj);
     this._hitTest();
     this.debug && this._debug(ctx);
     this._disposeDestroyedActors();
+    this.afterFuncs.forEach((func) => func(updateObj));
     // this._renderAll(ctx);
   }
 
@@ -41,7 +47,7 @@ export class Scene extends EventDispatcher<Scene> {
     const event = new GameEvent(newScene);
     this.dispatchEvent('changescene', event);
   }
-  private _hitTest(): void {
+  protected _hitTest(): void {
     const length = this.actors.length;
     for (let i = 0; i < length - 1; i++) {
       for (let j = i + 1; j < length; j++) {
@@ -55,28 +61,21 @@ export class Scene extends EventDispatcher<Scene> {
       }
     }
   }
-  private _updateAll(
-    gameInfo: GameInfo,
-    input: Input,
-    scene: Scene,
-    ctx: CanvasRenderingContext2D
-  ): void {
-    this.actors.forEach((actor) =>
-      actor.update({ gameInfo, input, scene, ctx })
-    );
+  protected _updateAll(updateObj: updateObj): void {
+    this.actors.forEach((actor) => actor.update(updateObj));
   }
   /*private _renderAll(ctx: CanvasRenderingContext2D): void {
     this.actors.forEach((obj) => obj.render(ctx));
   }*/
-  private _addDestroyedActor(actor: Actor): void {
+  protected _addDestroyedActor(actor: Actor): void {
     this._destroyedActors.push(actor);
   }
 
-  private _disposeDestroyedActors(): void {
+  protected _disposeDestroyedActors(): void {
     this._destroyedActors.forEach((actor) => this.remove(actor));
     this._destroyedActors = [];
   }
-  private _debug(ctx: CanvasRenderingContext2D) {
+  protected _debug(ctx: CanvasRenderingContext2D): void {
     this.actors.map((actor) => {
       actor.hitBox.stroke(ctx);
     });

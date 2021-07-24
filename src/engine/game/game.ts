@@ -17,7 +17,7 @@ export class Game {
     this.currentScene = firstScene;
     this.changeScene(firstScene);
 
-    this.screenRect = new Rect(width / 2, height / 2, width, height);
+    this.screenRect = Rect.upperLeft(0, 0, width, height);
   }
   public ctx: CanvasRenderingContext2D;
   public currentScene: Scene;

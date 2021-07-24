@@ -8,7 +8,10 @@ export class InputReceiver {
   getInput(): Input {
     const ketInput = this._keyinputReceiver.getInput();
     const direction = this.getDirection(ketInput);
-    const [isShot, isSlow] = [ketInput.getKey(' '), ketInput.getKey('Shift')];
+    const [isShot, isSlow] = [
+      ketInput.getKey(' ') || ketInput.getKey('z'),
+      ketInput.getKey('Shift'),
+    ];
 
     return new Input(direction, isShot, isSlow);
   }

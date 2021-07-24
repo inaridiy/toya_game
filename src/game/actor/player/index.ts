@@ -1,44 +1,56 @@
 import { SpriteActor } from '../../../engine/actor';
 import { AssetManager, Sprite } from '../../../engine/asset';
-import { Circle } from '../../../engine/shape';
-import { Input } from '../../../engine/game/event/input';
-import { Scene, updateObj } from '../../../engine/game/scene';
+import { Circle, Rect } from '../../../engine/shape';
+import { stageRect, playerConf } from '../../../const';
+import { updateObj } from '../../../engine/game/scene';
 import { ShotA, ShotB } from './player-shot';
 
 export class Player extends SpriteActor {
-  constructor(x: number, y: number, assets: AssetManager) {
-    super(x, y, new Circle(x, y, 10), ['player', 'character']);
-    const playerSprite = assets.sprite('kubi');
+  constructor(x: number, y: number, assets: AssetManager, center: Rect) {
+    super(x, y, new Circle(x, y, 10), ['player', 'character'], center);
+    const playerSprite = assets.sprite(playerConf.sprite.name);
     this.sprites = {
       main: playerSprite,
-      bulletA: assets.sprite('sinai'),
-      bulletB: assets.sprite('ago'),
+      bulletA: assets.sprite(playerConf.shotA.sprite.name),
+      bulletB: assets.sprite(playerConf.shotB.sprite.name),
     };
-    console.log(this);
   }
   private _timeCountA = 0;
   private _timeCountB = 0;
-  private _shotIntervalA = 7;
-  private _shotIntervalB = 10;
+  private _shotIntervalA = playerConf.shotA.interval;
+  private _shotIntervalB = playerConf.shotB.interval;
   private sprites: { main: Sprite; bulletA: Sprite; bulletB: Sprite };
-  public speed = 10;
+  public speed = playerConf.speed;
   public power = 100;
 
-  update({ input, ctx }: updateObj): void {
-    this._move(input);
-    this.render(ctx);
-    this._shot(input);
+  update(obj: updateObj): void {
+    this._move(obj);
+    this.render(obj);
+    this._shot(obj);
   }
 
-  private _move(input: Input): void {
+  private _move({ input }: updateObj): void {
     const movingDirection = input.isSlow
       ? input.direction.times(this.speed / 2)
       : input.direction.times(this.speed);
 
     this.x += movingDirection.x;
     this.y += movingDirection.y;
+
+    this.x =
+      this.x > stageRect.rx
+        ? stageRect.rx
+        : this.x < stageRect.lx
+        ? stageRect.lx
+        : this.x;
+    this.y =
+      this.y > stageRect.by
+        ? stageRect.by
+        : this.y < stageRect.ty
+        ? stageRect.ty
+        : this.y;
   }
-  private _shot(input: Input): void {
+  private _shot({ input }: updateObj): void {
     this._timeCountA++;
     this._timeCountB++;
     if (this._timeCountA > this._shotIntervalA && input.isShot) {
@@ -56,7 +68,12 @@ export class Player extends SpriteActor {
     }
   }
 
-  render(ctx: CanvasRenderingContext2D): void {
-    this.drawSprite(ctx, this.sprites.main, 100, 180);
+  render({ ctx }: updateObj): void {
+    this.drawSprite(
+      ctx,
+      this.sprites.main,
+      playerConf.sprite.width,
+      playerConf.sprite.rotate
+    );
   }
 }

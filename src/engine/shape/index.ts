@@ -18,6 +18,9 @@ export class Coord {
     );
     ctx.globalAlpha = 1;
   }
+  static add(coord: Coord, other: Coord): Coord {
+    return new Coord(coord.x + other.x, coord.y + other.y);
+  }
 }
 
 export class Circle extends Coord {
@@ -84,14 +87,26 @@ export class Rect extends Coord {
     super(x, y);
   }
   type: 'rect' = 'rect';
-
+  static upperLeft(x: number, y: number, width: number, height: number): Rect {
+    const centerX = x + width / 2,
+      centerY = y + height / 2;
+    return new Rect(centerX, centerY, width, height);
+  }
   isInside(c: Coord): boolean {
-    return (
-      c.x < this.x + this.width / 2 &&
-      c.x > this.x - this.width / 2 &&
-      c.y < this.y + this.height / 2 &&
-      c.y > this.y - this.height / 2
-    );
+    return c.x < this.rx && c.x > this.lx && c.y < this.by && c.y > this.ty;
+  }
+
+  get lx(): number {
+    return this.x - this.width / 2;
+  }
+  get rx(): number {
+    return this.x + this.width / 2;
+  }
+  get by(): number {
+    return this.y + this.height / 2;
+  }
+  get ty(): number {
+    return this.y - this.height / 2;
   }
   public stroke(ctx: CanvasRenderingContext2D): void {
     ctx.globalAlpha = 0.5;
@@ -111,7 +126,7 @@ export class Rect extends Coord {
 
 export class None extends Coord {
   type: 'none' = 'none';
-  stroke() {
+  stroke(): boolean {
     return false;
   }
 }

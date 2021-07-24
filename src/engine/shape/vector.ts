@@ -55,10 +55,10 @@ export class Vec2 {
   static cross(v1: Vec2, v2: Vec2): number {
     return v1.x * v2.y - v1.y * v2.x;
   }
-  static radian(radian: number) {
+  static radian(radian: number): Vec2 {
     return new Vec2(Math.cos(radian), Math.sin(radian));
   }
-  static degree(degree: number) {
+  static degree(degree: number): Vec2 {
     const radian = (degree / 180) * Math.PI;
     return this.radian(radian);
   }

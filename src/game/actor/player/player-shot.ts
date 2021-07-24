@@ -1,9 +1,11 @@
 import { Actor } from '../../../engine/actor';
 import { Sprite } from '../../../engine/asset';
-import { Scene, updateObj } from '../../../engine/game/scene';
+import { updateObj } from '../../../engine/game/scene';
 import { Coord, None } from '../../../engine/shape';
 import { Vec2 } from '../../../engine/shape/vector';
 import { PlayerBulletA, PlayerBulletB } from './player-bullet';
+import { playerConf } from '../../../const';
+const { shotA: confA, shotB: confB } = playerConf;
 
 abstract class PlayerShot extends Actor {
   constructor(x: number, y: number, public power: number) {
@@ -16,10 +18,12 @@ export class ShotA extends PlayerShot {
     super(x, y, power);
   }
 
-  update({ input }: updateObj) {
+  update({ input }: updateObj): void {
     const p = this.power;
-    const qty = Math.ceil(p / 15);
-    const angleBetween = input.isSlow ? 3 : 10;
+    const qty = Math.ceil(p / confA.qtyPerPower);
+    const angleBetween = input.isSlow
+      ? confA.angleBetween.slow
+      : confA.angleBetween.normal;
     const totalAngle = (qty - 1) * angleBetween;
     const rightmostAngle = 90 - totalAngle / 2;
 
@@ -40,17 +44,37 @@ export class ShotB extends PlayerShot {
     super(x, y, power);
   }
 
-  public angleBetween = 30;
-  update(obj: updateObj) {
-    const [lCoord, lAngle] = obj.input.isSlow
-      ? [new Coord(this.x, this.y - 100), 90]
-      : [new Coord(this.x - 100, this.y), 120];
-    this.spawnBullets(obj, lCoord, lAngle, 1);
+  update(obj: updateObj): void {
+    const {
+      angleBetween,
+      left: [lCoord, lAngle],
+      right: [rCoord, rAngle],
+    } = obj.input.isSlow
+      ? {
+          angleBetween: confB.angleBetween.slow,
+          left: [
+            Coord.add(this.coord, confB.left.slow.coord),
+            confB.left.slow.angle,
+          ],
+          right: [
+            Coord.add(this.coord, confB.right.slow.coord),
+            confB.right.slow.angle,
+          ],
+        }
+      : {
+          angleBetween: confB.angleBetween.normal,
+          left: [
+            Coord.add(this.coord, confB.left.normal.coord),
+            confB.left.normal.angle,
+          ],
+          right: [
+            Coord.add(this.coord, confB.right.normal.coord),
+            confB.right.normal.angle,
+          ],
+        };
 
-    const [rCoord, rAngle] = obj.input.isSlow
-      ? [new Coord(this.x, this.y - 100), 90]
-      : [new Coord(this.x + 100, this.y), 60];
-    this.spawnBullets(obj, rCoord, rAngle, -1);
+    this.spawnBullets(obj, lCoord, lAngle, angleBetween, 1);
+    this.spawnBullets(obj, rCoord, rAngle, angleBetween, -1);
 
     this.destroy();
   }
@@ -65,20 +89,17 @@ export class ShotB extends PlayerShot {
     obj: updateObj,
     startCood: Coord,
     startAngle: number,
+    angleBetween: number,
     adding: number
   ): void {
-    if (this.power >= 10) {
-      this.spawnBullet(obj, startCood, startAngle);
-    }
-    if (this.power >= 50) {
-      this.spawnBullet(obj, startCood, startAngle + this.angleBetween * adding);
-    }
-    if (this.power >= 100) {
-      this.spawnBullet(
-        obj,
-        startCood,
-        startAngle + this.angleBetween * 2 * adding
-      );
-    }
+    confB.incrTims.forEach((tim, i) => {
+      if (this.power >= tim) {
+        this.spawnBullet(
+          obj,
+          startCood,
+          startAngle + angleBetween * i * adding
+        );
+      }
+    });
   }
 }

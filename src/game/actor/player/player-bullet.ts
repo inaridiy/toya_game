@@ -3,6 +3,8 @@ import { Sprite } from '../../../engine/asset';
 import { Circle, Coord } from '../../../engine/shape';
 import { Vec2 } from '../../../engine/shape/vector';
 import { Scene, updateObj } from '../../../engine/game/scene';
+import { playerConf } from '../../../const';
+const { shotA: confA, shotB: confB } = playerConf;
 
 export abstract class PlayerBullet extends SpriteActor {
   constructor(
@@ -35,12 +37,12 @@ export abstract class PlayerBullet extends SpriteActor {
 }
 export class PlayerBulletA extends PlayerBullet {
   constructor(coord: Coord, vec: Vec2, sprite: Sprite) {
-    super(coord.x, coord.y, 15, 5, sprite);
+    super(coord.x, coord.y, confA.hitSize, confA.damage, sprite);
     this.speedVec = vec.times(this.speed);
   }
 
-  public speedVec: Vec2;
-  public speed = 20;
+  speedVec: Vec2;
+  speed = confA.speed;
 
   update({ gameInfo, ctx }: updateObj): void {
     this.x += this.speedVec.x;
@@ -53,12 +55,13 @@ export class PlayerBulletA extends PlayerBullet {
   }
 
   render(ctx: CanvasRenderingContext2D): void {
-    ctx.globalAlpha = 0.7;
+    ctx.globalAlpha = 0.9;
     this.drawSprite(
       ctx,
       this.sprite,
-      30,
-      (Math.atan2(this.speedVec.y, this.speedVec.x) * 180) / Math.PI + 90
+      confA.sprite.width,
+      (Math.atan2(this.speedVec.y, this.speedVec.x) * 180) / Math.PI +
+        confA.sprite.rotate
     );
     ctx.globalAlpha = 1;
   }
@@ -66,7 +69,7 @@ export class PlayerBulletA extends PlayerBullet {
 
 export class PlayerBulletB extends PlayerBullet {
   constructor(coord: Coord, sprite: Sprite, direction: Vec2, scene: Scene) {
-    super(coord.x, coord.y, 15, 3, sprite);
+    super(coord.x, coord.y, confB.hitSize, confB.damage, sprite);
     this.speedVec = direction;
     this.target = this.getEnemy(scene);
 
@@ -75,12 +78,12 @@ export class PlayerBulletB extends PlayerBullet {
     });
   }
 
-  public speedVec: Vec2;
-  public curvature = (10 * Math.PI) / 180;
-  public target: Actor | null;
-  public speed = 15;
+  speedVec: Vec2;
+  curvature = (confB.curvature * Math.PI) / 180;
+  target: Actor | null;
+  speed = confB.speed;
   timeCount = 0;
-  limit = 180;
+  limit = confB.trackingLimit;
 
   update({ gameInfo, ctx }: updateObj): void {
     let speedAngle = Math.atan2(this.speedVec.y, this.speedVec.x);
@@ -112,12 +115,13 @@ export class PlayerBulletB extends PlayerBullet {
   }
 
   render(ctx: CanvasRenderingContext2D): void {
-    ctx.globalAlpha = 0.7;
+    ctx.globalAlpha = 0.9;
     this.drawSprite(
       ctx,
       this.sprite,
-      40,
-      (Math.atan2(this.speedVec.y, this.speedVec.x) * 180) / Math.PI - 90
+      confB.sprite.width,
+      (Math.atan2(this.speedVec.y, this.speedVec.x) * 180) / Math.PI +
+        confB.sprite.rotate
     );
     ctx.globalAlpha = 1;
   }
