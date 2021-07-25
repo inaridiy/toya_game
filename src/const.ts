@@ -6,6 +6,14 @@ export const playerImages = [
   { name: 'ago', url: 'player/ago.png' },
 ];
 
+export const font = {
+  fontPath: '/static/fonts/',
+  fonts: [
+    { family: 'qahiri', source: 'Qahiri-Regular.ttf' },
+    { family: 'OtomanopeeOne', source: 'OtomanopeeOne-Regular.ttf' },
+  ],
+};
+
 export const size = { x: 1280, y: 960 };
 
 export const stageRect = Rect.upperLeft(30, 30, 600, 900);

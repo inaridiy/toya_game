@@ -22,6 +22,8 @@ export class Player extends SpriteActor {
   private sprites: { main: Sprite; bulletA: Sprite; bulletB: Sprite };
   public speed = playerConf.speed;
   public power = 100;
+  public life = 3;
+  public bomb = 3;
 
   update(obj: updateObj): void {
     this._move(obj);

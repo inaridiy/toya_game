@@ -621,6 +621,11 @@
   dependencies:
     "@babel/types" "^7.3.0"
 
+"@types/css-font-loading-module@^0.0.6":
+  version "0.0.6"
+  resolved "https://registry.yarnpkg.com/@types/css-font-loading-module/-/css-font-loading-module-0.0.6.tgz#1ac3417ed31eeb953134d29b56bca921644b87c0"
+  integrity sha512-MBvSMSxXFtIukyXRU3HhzL369rIWaqMVQD5kmDCYIFFD6Fe3lJ4c9UnLD02MLdTp7Z6ti7rO3SQtuDo7C80mmw==
+
 "@types/eslint-scope@^3.7.0":
   version "3.7.0"
   resolved "https://registry.yarnpkg.com/@types/eslint-scope/-/eslint-scope-3.7.0.tgz#4792816e31119ebd506902a482caec4951fabd86"

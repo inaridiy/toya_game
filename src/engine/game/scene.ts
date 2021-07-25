@@ -39,6 +39,12 @@ export class Scene extends EventDispatcher<Scene> {
     actor.addEventListener('spawnactor', (e) => this.add(e.target));
     actor.addEventListener('destroy', (e) => this._addDestroyedActor(e.target));
   }
+  get(tagName: string | string[]): Actor[] {
+    const tagNames = Array.isArray(tagName) ? tagName : [tagName];
+    return this.actors.filter((actor) =>
+      tagNames.every((tag) => actor.hasTag(tag))
+    );
+  }
   remove(actor: Actor): void {
     const index = this.actors.indexOf(actor);
     this.actors.splice(index, 1);

@@ -24,7 +24,7 @@ export abstract class PlayerBullet extends SpriteActor {
   }
 
   getEnemy(scene: Scene): Actor | null {
-    const enemies = scene.actors.filter((actor) => actor.hasTag('enemy'));
+    const enemies = scene.get('enemy');
     return enemies.length
       ? enemies.reduce((pv, actor) => {
           return this.coord.getDistance(pv.coord) >
@@ -55,7 +55,7 @@ export class PlayerBulletA extends PlayerBullet {
   }
 
   render(ctx: CanvasRenderingContext2D): void {
-    ctx.globalAlpha = 0.9;
+    ctx.globalAlpha = 0.8;
     this.drawSprite(
       ctx,
       this.sprite,
@@ -115,7 +115,7 @@ export class PlayerBulletB extends PlayerBullet {
   }
 
   render(ctx: CanvasRenderingContext2D): void {
-    ctx.globalAlpha = 0.9;
+    ctx.globalAlpha = 0.8;
     this.drawSprite(
       ctx,
       this.sprite,

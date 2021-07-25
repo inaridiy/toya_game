@@ -1,7 +1,7 @@
 import { AssetManager } from './engine/asset';
 import { Game } from './engine/game/game';
 import { Test } from './game/scene/test';
-import { playerImages, size } from './const';
+import { playerImages, font, size } from './const';
 
 const wrapper = document.getElementById('wrapper') as HTMLDivElement;
 const canvas = document.getElementById('canvas') as HTMLCanvasElement;
@@ -9,21 +9,43 @@ const canvas = document.getElementById('canvas') as HTMLCanvasElement;
 const assets = new AssetManager('/static/img/');
 
 const init = () => {
+  const initPromise = Promise.all([loadAssets(), loadFonts()]);
+
+  initPromise.then(gameInit).catch((e) => console.error(e));
+};
+
+const gameInit = () => {
   setCanvasSize();
   const testScene = new Test(assets);
   const game = new Game(canvas, size.x, size.y, testScene);
   game.start();
 };
 
+const loadFonts = () => {
+  const fontPromises = font.fonts.map((fontData) => {
+    const obj = new FontFace(
+      fontData.family,
+      `url('${font.fontPath}${fontData.source}')`
+    );
+    return new Promise((resolve, reject) => {
+      obj
+        .load()
+        .then((loadedFont) => {
+          document.fonts.add(loadedFont);
+          resolve('ok');
+        })
+        .catch((e) => reject(e));
+    });
+  });
+  return Promise.all(fontPromises);
+};
+
 const loadAssets = () => {
-  assets
+  return assets
     .addImages(playerImages)
     .addImage('bgImg', 'bg.jpg')
-    .loadAll()
-    .then(init)
-    .catch((e) => {
-      console.error(e);
-    });
+    .addImage('kimoi', 'kimoi.png')
+    .loadAll();
 };
 
 const setCanvasSize = () => {
@@ -35,5 +57,6 @@ const setCanvasSize = () => {
     canvas.style.height = 'auto';
   }
 };
-window.onload = loadAssets;
+
+window.onload = init;
 window.onresize = setCanvasSize;

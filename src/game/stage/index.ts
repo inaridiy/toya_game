@@ -1,5 +1,6 @@
 import { stageRect } from '../../const';
-import { Scene, updateObj } from './scene';
+import { Scene, updateObj } from '../../engine/game/scene';
+import { Player } from '../actor/player';
 
 export class Stage extends Scene {
   constructor(bgImage: HTMLImageElement) {
@@ -7,6 +8,7 @@ export class Stage extends Scene {
 
     const drawFrame = ({ ctx }: updateObj) => {
       this.drawFrame(ctx, bgImage);
+      this.drawInfo(ctx);
       this.clip(ctx);
     };
     this.beforeFuncs.push(drawFrame);
@@ -25,6 +27,19 @@ export class Stage extends Scene {
       this.stageRect.height
     );
   }
+  drawInfo(ctx: CanvasRenderingContext2D): void {
+    const [player] = this.get('player');
+    const { power, life, bomb } = player as Player;
+    ctx.font = '100px OtomanopeeOne';
+    ctx.fillStyle = 'black';
+    ctx.fillText('剣持ボイス出せ', 200, 600);
+  }
+  drawText(
+    ctx: CanvasRenderingContext2D,
+    text: string,
+    x: number,
+    y: number
+  ): void {}
   clip(ctx: CanvasRenderingContext2D): void {
     ctx.beginPath();
     ctx.rect(
