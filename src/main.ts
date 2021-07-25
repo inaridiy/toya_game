@@ -18,6 +18,7 @@ const init = () => {
 const loadAssets = () => {
   assets
     .addImages(playerImages)
+    .addImage('bgImg', 'bg.jpg')
     .loadAll()
     .then(init)
     .catch((e) => {
