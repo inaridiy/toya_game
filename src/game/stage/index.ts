@@ -1,14 +1,24 @@
 import { stageRect } from '../../const';
 import { Scene, updateObj } from '../../engine/game/scene';
 import { Player } from '../actor/player';
+import { ui } from '../../const';
+import { AssetManager } from '../../engine/asset';
+
+type uiConf = {
+  x: number;
+  y: number;
+  text: string;
+  font: string;
+  fillStyle: string;
+};
 
 export class Stage extends Scene {
-  constructor(bgImage: HTMLImageElement) {
+  constructor(bgImage: HTMLImageElement, public assets: AssetManager) {
     super();
 
     const drawFrame = ({ ctx }: updateObj) => {
       this.drawFrame(ctx, bgImage);
-      this.drawInfo(ctx);
+      this.drawAllInfo(ctx);
       this.clip(ctx);
     };
     this.beforeFuncs.push(drawFrame);
@@ -27,19 +37,36 @@ export class Stage extends Scene {
       this.stageRect.height
     );
   }
-  drawInfo(ctx: CanvasRenderingContext2D): void {
+  drawAllInfo(ctx: CanvasRenderingContext2D): void {
     const [player] = this.get('player');
     const { power, life, bomb } = player as Player;
-    ctx.font = '100px OtomanopeeOne';
-    ctx.fillStyle = 'black';
-    ctx.fillText('剣持ボイス出せ', 200, 600);
+    const {
+      info: { power: confPower, life: confLife, bomb: confBomb },
+    } = ui;
+    this.drawInfo(ctx, confPower, power);
+    this.drawInfo(ctx, confLife, life);
+    this.drawInfo(ctx, confBomb, bomb);
   }
+
+  drawInfo(
+    ctx: CanvasRenderingContext2D,
+    conf: uiConf,
+    data: { name: string; width: number; rotate: number } | number | string
+  ): void {}
+
   drawText(
     ctx: CanvasRenderingContext2D,
     text: string,
     x: number,
     y: number
-  ): void {}
+  ): void {
+    ctx.save();
+    ctx.shadowBlur = 5;
+    ctx.shadowColor = ctx.fillStyle as string;
+    ctx.fillText(text, x, y);
+    ctx.restore();
+  }
+
   clip(ctx: CanvasRenderingContext2D): void {
     ctx.beginPath();
     ctx.rect(

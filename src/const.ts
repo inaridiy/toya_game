@@ -21,22 +21,26 @@ export const stageRect = Rect.upperLeft(30, 30, 600, 900);
 export const ui = {
   info: {
     power: {
-      x: 500,
+      x: 800,
       y: 500,
       text: 'Power',
-      font: '100px OtomanopeeOne',
+      font: '60px OtomanopeeOne',
       fillStyle: 'black',
     },
     life: {
-      x: 500,
-      y: 500,
+      x: 800,
+      y: 600,
       text: 'Life',
+      font: '60px OtomanopeeOne',
+      fillStyle: 'black',
       sprite: { name: 'kimoi', width: '50', rotate: '0' },
     },
     bomb: {
-      x: 500,
-      y: 500,
+      x: 800,
+      y: 700,
       text: 'Bomb',
+      font: '60px OtomanopeeOne',
+      fillStyle: 'black',
       sprite: { name: 'kimoi', width: '50', rotate: '0' },
     },
   },
