@@ -18,6 +18,30 @@ export const size = { x: 1280, y: 960 };
 
 export const stageRect = Rect.upperLeft(30, 30, 600, 900);
 
+export const ui = {
+  info: {
+    power: {
+      x: 500,
+      y: 500,
+      text: 'Power',
+      font: '100px OtomanopeeOne',
+      fillStyle: 'black',
+    },
+    life: {
+      x: 500,
+      y: 500,
+      text: 'Life',
+      sprite: { name: 'kimoi', width: '50', rotate: '0' },
+    },
+    bomb: {
+      x: 500,
+      y: 500,
+      text: 'Bomb',
+      sprite: { name: 'kimoi', width: '50', rotate: '0' },
+    },
+  },
+};
+
 export const playerConf = {
   hitSize: 10,
   speed: 10,
@@ -54,5 +78,3 @@ export const playerConf = {
     sprite: { name: 'ago', width: 30, rotate: -90 },
   },
 };
-
-console.log(stageRect);

@@ -54,7 +54,7 @@ module.exports = (env, argv) => {
   if (argv.mode !== 'production') {
     config.target = 'web';
   }
-  if (argv.analyze) {
+  if (argv.mode === 'production') {
     config.plugins.push(new BundleAnalyzerPlugin());
     config.plugins.push(
       new ImageminPlugin({
