@@ -1,21 +1,21 @@
-import { Coordinate } from '../src/base/actor/shape/coordinate';
+import { Coord } from '../src/engine/shape';
 
 test('距離測定関数のテスト', () => {
-  const coA = new Coordinate(5, 6);
-  expect(new Coordinate(5, 6).getDistance(coA)).toBe(0);
-  expect(new Coordinate(5, 7).getDistance(coA)).toBe(1);
-  expect(new Coordinate(8, 10).getDistance(coA)).toBe(5);
-  expect(new Coordinate(2, 2).getDistance(coA)).toBe(5);
+  const coA = new Coord(5, 6);
+  expect(new Coord(5, 6).getDistance(coA)).toBe(0);
+  expect(new Coord(5, 7).getDistance(coA)).toBe(1);
+  expect(new Coord(8, 10).getDistance(coA)).toBe(5);
+  expect(new Coord(2, 2).getDistance(coA)).toBe(5);
 });
 
-import { Line, Circle, Rectangle } from '../src/base/actor/shape/index';
+import { Line, Circle, Rect } from '../src/engine/shape';
 
 test('Lineクラスの始点終点取得テスト', () => {
   const LineA = new Line(3, 4, 10, 30);
   expect(LineA.startPoint.getDistance(LineA.endPoint)).toBe(10);
 });
 
-import { hitCheckOfCicleAndLine } from '../src/base/actor/hit-check/checker';
+import { hitCheckOfCicleAndLine } from '../src/engine/shape/hit-test';
 
 test('線分と円の当たり判定', () => {
   const lineA = new Line(3, 4, 10, 30);
@@ -32,8 +32,15 @@ test('線分と円の当たり判定', () => {
 });
 
 test('矩形と点の当たり判定', () => {
-  const rect = new Rectangle(3, 4, 5, 10);
+  const rect = new Rect(3, 4, 5, 10);
 
-  expect(rect.isInside(new Coordinate(3, 4))).toBe(true);
-  expect(rect.isInside(new Coordinate(10, 2))).toBe(false);
+  expect(rect.isInside(new Coord(3, 4))).toBe(true);
+  expect(rect.isInside(new Coord(10, 2))).toBe(false);
+});
+
+import { hitCheckOfRects } from '../src/engine/shape/hit-test';
+
+test('矩形同士の当たり判定', () => {
+  const rect = new Rect(100, 30, 250, 100);
+  expect(hitCheckOfRects(rect, new Rect(100, 140, 100, 100))).toBe(false);
 });

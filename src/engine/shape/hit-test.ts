@@ -6,6 +6,18 @@ export const hitCheckOfCircles = (circle: Circle, other: Circle): boolean => {
   return result;
 };
 
+export const hitCheckOfRects = (rect: Rect, other: Rect): boolean => {
+  const [xDistance, yDistance] = [
+    Math.abs(rect.x - other.x),
+    Math.abs(rect.y - other.y),
+  ];
+  const [xSum, ySum] = [
+    (rect.width + other.width) / 2,
+    (rect.height + other.height) / 2,
+  ];
+
+  return xDistance <= xSum && yDistance <= ySum;
+};
 export const hitCheckOfCicleAndLine = (circle: Circle, line: Line): boolean => {
   //参考 https://yttm-work.jp/collision/collision_0006.html
   const startToCenter = new Vec2(
@@ -73,7 +85,9 @@ export class hitTest {
       } else if (shape.type === 'rect') {
         return other.type === 'circle'
           ? hitCheckOfCicleAndRect(other, shape)
-          : false; //円以外との判定はしない
+          : other.type === 'rect'
+          ? hitCheckOfRects(shape, other)
+          : false;
       } else {
         return false;
       }
