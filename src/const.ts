@@ -23,6 +23,7 @@ export const ui = {
     power: {
       x: 800,
       y: 500,
+      margin: 50,
       text: 'Power',
       font: '60px OtomanopeeOne',
       fillStyle: 'black',
@@ -30,18 +31,20 @@ export const ui = {
     life: {
       x: 800,
       y: 600,
+      margin: 50,
       text: 'Life',
       font: '60px OtomanopeeOne',
       fillStyle: 'black',
-      sprite: { name: 'kimoi', width: '50', rotate: '0' },
+      sprite: { name: 'kimoi', width: 70, rotate: 0 },
     },
     bomb: {
       x: 800,
       y: 700,
+      margin: 50,
       text: 'Bomb',
       font: '60px OtomanopeeOne',
       fillStyle: 'black',
-      sprite: { name: 'kimoi', width: '50', rotate: '0' },
+      sprite: { name: 'kimoi', width: 70, rotate: 0 },
     },
   },
 };

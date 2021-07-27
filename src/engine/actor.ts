@@ -1,6 +1,6 @@
 import { EventDispatcher, GameEvent } from './game/event/event-dispatcher';
 import { Shapes, Coord, Rect } from './shape';
-import { Sprite } from './asset';
+import { Sprite, drawSprite } from './asset';
 
 import { updateObj } from './game/scene';
 
@@ -69,25 +69,6 @@ export abstract class SpriteActor extends Actor {
     width = sprite.rect.width,
     degree = 0
   ): void {
-    if (sprite === undefined) {
-      console.error('スプライトがありません');
-      return;
-    }
-    ctx.save();
-    ctx.translate(this.x, this.y);
-    ctx.rotate((degree * Math.PI) / 180);
-    const height = (sprite.rect.height * width) / sprite.rect.width;
-    ctx.drawImage(
-      sprite.image,
-      sprite.rect.x,
-      sprite.rect.y,
-      sprite.rect.width,
-      sprite.rect.height,
-      -width / 2,
-      -height / 2,
-      width,
-      height
-    );
-    ctx.restore();
+    drawSprite(ctx, this.x, this.y, sprite, width, degree);
   }
 }

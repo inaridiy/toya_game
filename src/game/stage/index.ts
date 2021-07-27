@@ -3,13 +3,16 @@ import { Scene, updateObj } from '../../engine/game/scene';
 import { Player } from '../actor/player';
 import { ui } from '../../const';
 import { AssetManager } from '../../engine/asset';
+import { drawSprite } from '../../engine/asset';
 
 type uiConf = {
   x: number;
   y: number;
+  margin: number;
   text: string;
   font: string;
   fillStyle: string;
+  sprite?: { name: string; width: number; rotate: number };
 };
 
 export class Stage extends Scene {
@@ -43,6 +46,7 @@ export class Stage extends Scene {
     const {
       info: { power: confPower, life: confLife, bomb: confBomb },
     } = ui;
+
     this.drawInfo(ctx, confPower, power);
     this.drawInfo(ctx, confLife, life);
     this.drawInfo(ctx, confBomb, bomb);
@@ -51,8 +55,33 @@ export class Stage extends Scene {
   drawInfo(
     ctx: CanvasRenderingContext2D,
     conf: uiConf,
-    data: { name: string; width: number; rotate: number } | number | string
-  ): void {}
+    data: number | string
+  ): void {
+    ctx.save();
+    ctx.font = conf.font;
+    ctx.fillStyle = conf.fillStyle;
+    ctx.shadowBlur = 3;
+    ctx.fillText(conf.text, conf.x, conf.y);
+
+    const measure = ctx.measureText(conf.text);
+    const dataX = measure.width + conf.x + conf.margin;
+    if (conf.sprite && typeof data === 'number') {
+      for (let i = 0; i < 3; i++) {
+        const sprite = this.assets.sprite(conf.sprite.name);
+        drawSprite(
+          ctx,
+          dataX + i * conf.sprite.width,
+          conf.y - 20,
+          sprite,
+          conf.sprite.width
+        );
+      }
+      ctx.restore();
+    } else {
+      ctx.fillText(data.toString(), dataX, conf.y);
+      ctx.restore();
+    }
+  }
 
   drawText(
     ctx: CanvasRenderingContext2D,
@@ -63,6 +92,7 @@ export class Stage extends Scene {
     ctx.save();
     ctx.shadowBlur = 5;
     ctx.shadowColor = ctx.fillStyle as string;
+    ctx.textAlign = 'center';
     ctx.fillText(text, x, y);
     ctx.restore();
   }
@@ -76,6 +106,5 @@ export class Stage extends Scene {
       this.stageRect.height
     );
     ctx.clip();
-    //console.log(this.stageRect.by);
   }
 }

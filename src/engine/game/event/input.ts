@@ -6,14 +6,14 @@ export class InputReceiver {
   private _keyinputReceiver = new KeyInputReceiver();
 
   getInput(): Input {
-    const ketInput = this._keyinputReceiver.getInput();
-    const direction = this.getDirection(ketInput);
+    const keyInput = this._keyinputReceiver.getInput();
+    const direction = this.getDirection(keyInput);
     const [isShot, isSlow] = [
-      ketInput.getKey(' ') || ketInput.getKey('z'),
-      ketInput.getKey('Shift'),
+      keyInput.getKey(' ') || keyInput.getKey('z'),
+      keyInput.getKey('Shift'),
     ];
 
-    return new Input(direction, isShot, isSlow);
+    return new Input(direction, isShot, isSlow, keyInput);
   }
 
   getDirection(ketInput: KeyInput): Vec2 {
@@ -31,7 +31,8 @@ export class Input {
   constructor(
     public direction: Vec2,
     public isShot: boolean,
-    public isSlow: boolean
+    public isSlow: boolean,
+    public keyInput: KeyInput
   ) {}
 }
 

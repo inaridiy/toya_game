@@ -29,6 +29,7 @@ export class Player extends SpriteActor {
     this._move(obj);
     this.render(obj);
     this._shot(obj);
+    this._debug(obj);
   }
 
   private _move({ input }: updateObj): void {
@@ -69,7 +70,10 @@ export class Player extends SpriteActor {
       this._timeCountB = 0;
     }
   }
-
+  _debug({ scene, input: { keyInput } }: updateObj) {
+    if (!scene.debug) return;
+    if (keyInput.getKey('0')) console.log(this);
+  }
   render({ ctx }: updateObj): void {
     this.drawSprite(
       ctx,

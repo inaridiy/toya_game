@@ -48,3 +48,33 @@ export class Sprite {
     return new Sprite(img, new Rect(0, 0, img.width, img.height));
   }
 }
+
+export const drawSprite = (
+  ctx: CanvasRenderingContext2D,
+  x: number,
+  y: number,
+  sprite: Sprite,
+  width = sprite.rect.width,
+  degree = 0
+): void => {
+  if (sprite === undefined) {
+    console.error('スプライトがありません');
+    return;
+  }
+  ctx.save();
+  ctx.translate(x, y);
+  ctx.rotate((degree * Math.PI) / 180);
+  const height = (sprite.rect.height * width) / sprite.rect.width;
+  ctx.drawImage(
+    sprite.image,
+    sprite.rect.x,
+    sprite.rect.y,
+    sprite.rect.width,
+    sprite.rect.height,
+    -width / 2,
+    -height / 2,
+    width,
+    height
+  );
+  ctx.restore();
+};

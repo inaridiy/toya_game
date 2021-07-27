@@ -39,10 +39,12 @@ export class Game {
 
   loop(): void {
     this._count++;
+    this.ctx.save();
     this.ctx.clearRect(0, 0, this.width, this.height);
     const info = new GameInfo(this.screenRect, this.currentScene, this._count);
     const input = this._inputReceiver.getInput();
     this.currentScene.update(info, input, this.ctx);
+    this.ctx.restore();
     window.requestAnimationFrame(this.loop.bind(this));
   }
 }
