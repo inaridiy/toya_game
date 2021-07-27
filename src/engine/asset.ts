@@ -34,7 +34,7 @@ export class AssetManager {
     return this._assets;
   }
   get(name: string): HTMLImageElement {
-    return <HTMLImageElement>this._assets.get(name);
+    return this._assets.get(name) as HTMLImageElement;
   }
   sprite(name: string): Sprite {
     const image = this.get(name);
@@ -46,6 +46,37 @@ export class Sprite {
   constructor(public image: HTMLImageElement, public rect: Rect) {}
   static get(img: HTMLImageElement): Sprite {
     return new Sprite(img, new Rect(0, 0, img.width, img.height));
+  }
+}
+
+export type setSpriteFuncs = { [index: string]: setSpriteFunc };
+export type setSpriteFunc = (assets: AssetManager) => Sprite;
+export class SpriteManager {
+  constructor(public assets: AssetManager) {}
+  private _spriteFuncs: setSpriteFuncs = {};
+  private _sprites: Map<string, Sprite> = new Map();
+
+  addSprites(obj: setSpriteFuncs): void {
+    for (const key in obj) {
+      this.addSprite(key, obj[key]);
+    }
+  }
+
+  addSprite(name: string, func: setSpriteFunc): void {
+    this._spriteFuncs[name] = func;
+  }
+
+  load(): void {
+    for (const key in this._spriteFuncs) {
+      this._sprites.set(key, this._spriteFuncs[key](this.assets));
+    }
+  }
+  get(name: string): Sprite {
+    const sprite = this._sprites.get(name);
+    if (!sprite) {
+      return this.assets.sprite(name);
+    }
+    return sprite;
   }
 }
 

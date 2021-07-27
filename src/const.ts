@@ -2,12 +2,6 @@ import { Coord, Rect } from './engine/shape';
 
 export type typeSprite = { name: string; width: number; rotate: number };
 
-export const playerImages = [
-  { name: 'kubi', url: 'player/namakubi.png' },
-  { name: 'sinai', url: 'player/sinai.png' },
-  { name: 'ago', url: 'player/ago.png' },
-];
-
 export const font = {
   fontPath: '/static/fonts/',
   fonts: [

@@ -1,19 +1,20 @@
 import { SpriteActor } from '../../../engine/actor';
-import { AssetManager, Sprite } from '../../../engine/asset';
-import { Circle, Rect } from '../../../engine/shape';
+import { Sprite } from '../../../engine/asset';
+import { Circle } from '../../../engine/shape';
 import { stageRect, playerConf } from '../../../const';
 import { updateObj } from '../../../engine/game/scene';
 import { ShotA, ShotB } from './player-shot';
 import { Power } from '../obj';
+import { sprites } from '../../../assets';
 
 export class Player extends SpriteActor {
-  constructor(x: number, y: number, assets: AssetManager, center: Rect) {
-    super(x, y, new Circle(x, y, 10), ['player', 'character'], center);
-    const playerSprite = assets.sprite(playerConf.sprite.name);
+  constructor(x: number, y: number) {
+    super(x, y, new Circle(x, y, 10), ['player', 'character'], stageRect);
+    const playerSprite = sprites.get(playerConf.sprite.name);
     this.sprites = {
       main: playerSprite,
-      bulletA: assets.sprite(playerConf.shotA.sprite.name),
-      bulletB: assets.sprite(playerConf.shotB.sprite.name),
+      bulletA: sprites.get(playerConf.shotA.sprite.name),
+      bulletB: sprites.get(playerConf.shotB.sprite.name),
     };
 
     this.addEventListener('hit', (e) => {

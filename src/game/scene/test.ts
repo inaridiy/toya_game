@@ -1,24 +1,25 @@
-import { AssetManager } from '../../engine/asset';
 import { Stage } from '../stage';
 import { Player } from '../actor/player';
 import { BezierAcotr } from '../actor/test';
 import { Power } from '../actor/obj';
+import { assets } from '../../assets';
 
 export class Test extends Stage {
-  constructor(public assets: AssetManager) {
+  constructor() {
     super(assets.get('bgImg'), assets);
-    const player = new Player(0, 300, assets, this.stageRect);
+    const player = new Player(0, 300, this.stageRect);
     this.add(player);
 
-    const ba = new BezierAcotr(100, 100, assets);
+    const ba = new BezierAcotr(100, 100);
     this.add(ba);
-    this.add(new Power(0, -400, 'normal', this.assets));
+
+    this.add(new Power(0, -400, 'normal'));
     const spawnPower = () => {
       if (this.count % 20 == 0) {
-        this.add(new Power(0, -400, 'normal', this.assets));
+        this.add(new Power(0, -400, 'normal'));
       }
       if (this.count % 100 == 0) {
-        this.add(new Power(0, -400, 'large', this.assets));
+        this.add(new Power(0, -400, 'large'));
       }
       this.count++;
     };

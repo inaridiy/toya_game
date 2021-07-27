@@ -3,17 +3,13 @@ import { Circle } from '../../engine/shape';
 import { stageObj, typeStageObjs, typeStageObj, stageRect } from '../../const';
 import { Vec2 } from '../../engine/shape/vector';
 import { updateObj } from '../../engine/game/scene';
-import { AssetManager, Sprite } from '../../engine/asset';
+import { Sprite } from '../../engine/asset';
+import { sprites } from '../../assets';
 
 const { power: powerConf } = stageObj;
 
 export class Power extends SpriteActor {
-  constructor(
-    x: number,
-    y: number,
-    public size: keyof typeStageObjs['power'],
-    assets: AssetManager
-  ) {
+  constructor(x: number, y: number, public size: keyof typeStageObjs['power']) {
     super(
       x,
       y,
@@ -32,7 +28,7 @@ export class Power extends SpriteActor {
       Math.random() * -1
     ).normalized.times(initSpeed);
 
-    this.sprite = assets.sprite(conf.sprite.name);
+    this.sprite = sprites.get(conf.sprite.name);
     this.conf = conf;
   }
   public vec: Vec2;
@@ -47,7 +43,6 @@ export class Power extends SpriteActor {
   fall(): void {
     this.x += this.vec.x;
     this.y += this.vec.y;
-
     this.vec.y += this.conf.gravity;
     if (this.vec.magnitude > this.conf.maxSpeed) {
       this.vec = this.vec.normalized.times(this.conf.maxSpeed);
