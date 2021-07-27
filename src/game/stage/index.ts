@@ -1,4 +1,4 @@
-import { stageRect } from '../../const';
+import { stageRect, deletaRect } from '../../const';
 import { Scene, updateObj } from '../../engine/game/scene';
 import { Player } from '../actor/player';
 import { ui } from '../../const';
@@ -25,6 +25,15 @@ export class Stage extends Scene {
       this.clip(ctx);
     };
     this.beforeFuncs.push(drawFrame);
+
+    const deleteOutside = () => {
+      this.actors.forEach((actor) => {
+        if (!deletaRect.isInside(actor.hitBox)) {
+          actor.destroy();
+        }
+      });
+    };
+    this.afterFuncs.push(deleteOutside);
   }
 
   public stageRect = stageRect;

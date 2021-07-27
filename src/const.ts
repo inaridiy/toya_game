@@ -13,6 +13,7 @@ export const font = {
 export const size = { x: 1280, y: 960 };
 
 export const stageRect = Rect.upperLeft(30, 30, 600, 900);
+export const deletaRect = stageRect.expansion(400);
 
 export type typeStageObj = {
   incr: number;

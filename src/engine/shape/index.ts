@@ -92,10 +92,13 @@ export class Rect extends Coord {
       centerY = y + height / 2;
     return new Rect(centerX, centerY, width, height);
   }
+
   isInside(c: Coord): boolean {
     return c.x < this.rx && c.x > this.lx && c.y < this.by && c.y > this.ty;
   }
-
+  expansion(x: number, y?: number): Rect {
+    return new Rect(this.x, this.y, this.width + x, this.height + (y || x));
+  }
   get lx(): number {
     return this.x - this.width / 2;
   }

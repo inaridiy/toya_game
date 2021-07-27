@@ -39,6 +39,9 @@ export class Power extends SpriteActor {
     //console.log(this.coord);
     this.fall();
     this.render(ctx);
+    if (this.y > stageRect.by) {
+      this.destroy();
+    }
   }
   fall(): void {
     this.x += this.vec.x;

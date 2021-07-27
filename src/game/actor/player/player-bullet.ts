@@ -44,13 +44,10 @@ export class PlayerBulletA extends PlayerBullet {
   speedVec: Vec2;
   speed = confA.speed;
 
-  update({ gameInfo, ctx }: updateObj): void {
+  update({ ctx }: updateObj): void {
     this.x += this.speedVec.x;
     this.y += this.speedVec.y;
 
-    if (!gameInfo.screenRect.isInside(this.coord)) {
-      this.destroy();
-    }
     this.render(ctx);
   }
 
@@ -85,7 +82,7 @@ export class PlayerBulletB extends PlayerBullet {
   timeCount = 0;
   limit = confB.trackingLimit;
 
-  update({ gameInfo, ctx }: updateObj): void {
+  update({ ctx }: updateObj): void {
     let speedAngle = Math.atan2(this.speedVec.y, this.speedVec.x);
     this.timeCount++;
 
@@ -108,9 +105,6 @@ export class PlayerBulletB extends PlayerBullet {
     this.x += this.speedVec.x;
     this.y += this.speedVec.y;
 
-    if (!gameInfo.screenRect.isInside(this.coord)) {
-      this.destroy();
-    }
     this.render(ctx);
   }
 
