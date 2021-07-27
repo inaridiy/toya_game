@@ -1,5 +1,7 @@
 import { Coord, Rect } from './engine/shape';
 
+export type typeSprite = { name: string; width: number; rotate: number };
+
 export const playerImages = [
   { name: 'kubi', url: 'player/namakubi.png' },
   { name: 'sinai', url: 'player/sinai.png' },
@@ -17,6 +19,41 @@ export const font = {
 export const size = { x: 1280, y: 960 };
 
 export const stageRect = Rect.upperLeft(30, 30, 600, 900);
+
+export type typeStageObj = {
+  incr: number;
+  hitSize: number;
+  sprite: typeSprite;
+  maxInitSpeed: number;
+  minInitSpeed: number;
+  maxSpeed: number;
+  gravity: number;
+};
+export type typePowerObjs = { normal: typeStageObj; large: typeStageObj };
+export type typeStageObjs = { power: typePowerObjs };
+
+export const stageObj: typeStageObjs = {
+  power: {
+    normal: {
+      incr: 1,
+      hitSize: 20,
+      maxInitSpeed: 12,
+      minInitSpeed: 4,
+      maxSpeed: 8,
+      gravity: 0.5,
+      sprite: { name: 'power', width: 30, rotate: 0 },
+    },
+    large: {
+      incr: 10,
+      hitSize: 30,
+      maxInitSpeed: 5,
+      minInitSpeed: 0,
+      maxSpeed: 6,
+      gravity: 0.3,
+      sprite: { name: 'power', width: 50, rotate: 0 },
+    },
+  },
+};
 
 export const ui = {
   info: {
@@ -50,9 +87,9 @@ export const ui = {
 };
 
 export const playerConf = {
-  hitSize: 10,
+  hitSize: 30,
   speed: 10,
-
+  maxPower: 120,
   sprite: { name: 'kubi', width: 60, rotate: 180 },
 
   shotA: {
@@ -76,11 +113,11 @@ export const playerConf = {
     incrTims: [10, 50, 100],
     left: {
       normal: { coord: new Coord(-100, 0), angle: 120 },
-      slow: { coord: new Coord(0, -100), angle: 90 },
+      slow: { coord: new Coord(0, -100), angle: 105 },
     },
     right: {
       normal: { coord: new Coord(100, 0), angle: 60 },
-      slow: { coord: new Coord(0, -100), angle: 90 },
+      slow: { coord: new Coord(0, -100), angle: 75 },
     },
     sprite: { name: 'ago', width: 30, rotate: -90 },
   },

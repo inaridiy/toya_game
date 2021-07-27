@@ -45,6 +45,7 @@ const loadAssets = () => {
     .addImages(playerImages)
     .addImage('bgImg', 'bg.jpg')
     .addImage('kimoi', 'kimoi.png')
+    .addImage('power', 'power.png')
     .loadAll();
 };
 

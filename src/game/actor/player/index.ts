@@ -4,6 +4,7 @@ import { Circle, Rect } from '../../../engine/shape';
 import { stageRect, playerConf } from '../../../const';
 import { updateObj } from '../../../engine/game/scene';
 import { ShotA, ShotB } from './player-shot';
+import { Power } from '../obj';
 
 export class Player extends SpriteActor {
   constructor(x: number, y: number, assets: AssetManager, center: Rect) {
@@ -14,6 +15,17 @@ export class Player extends SpriteActor {
       bulletA: assets.sprite(playerConf.shotA.sprite.name),
       bulletB: assets.sprite(playerConf.shotB.sprite.name),
     };
+
+    this.addEventListener('hit', (e) => {
+      if (e.target.hasTag('power')) {
+        const power = e.target as Power;
+        power.destroy();
+        this.power += power.conf.incr;
+        if (this.power > playerConf.maxPower) {
+          this.power = playerConf.maxPower;
+        }
+      }
+    });
   }
   private _timeCountA = 0;
   private _timeCountB = 0;
@@ -21,7 +33,7 @@ export class Player extends SpriteActor {
   private _shotIntervalB = playerConf.shotB.interval;
   private sprites: { main: Sprite; bulletA: Sprite; bulletB: Sprite };
   public speed = playerConf.speed;
-  public power = 100;
+  public power = 1;
   public life = 3;
   public bomb = 3;
 
