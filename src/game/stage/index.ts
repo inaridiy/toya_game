@@ -2,8 +2,8 @@ import { stageRect } from '../../const';
 import { Scene, updateObj } from '../../engine/game/scene';
 import { Player } from '../actor/player';
 import { ui } from '../../const';
-import { AssetManager } from '../../engine/asset';
 import { drawSprite } from '../../engine/asset';
+import { sprites } from '../../assets';
 
 type uiConf = {
   x: number;
@@ -16,7 +16,7 @@ type uiConf = {
 };
 
 export class Stage extends Scene {
-  constructor(bgImage: HTMLImageElement, public assets: AssetManager) {
+  constructor(bgImage: HTMLImageElement) {
     super();
 
     const drawFrame = ({ ctx }: updateObj) => {
@@ -67,7 +67,7 @@ export class Stage extends Scene {
     const dataX = measure.width + conf.x + conf.margin;
     if (conf.sprite && typeof data === 'number') {
       for (let i = 0; i < 3; i++) {
-        const sprite = this.assets.sprite(conf.sprite.name);
+        const sprite = sprites.get(conf.sprite.name);
         drawSprite(
           ctx,
           dataX + i * conf.sprite.width,

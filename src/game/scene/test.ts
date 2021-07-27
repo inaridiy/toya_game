@@ -6,8 +6,8 @@ import { assets } from '../../assets';
 
 export class Test extends Stage {
   constructor() {
-    super(assets.get('bgImg'), assets);
-    const player = new Player(0, 300, this.stageRect);
+    super(assets.get('bgImg'));
+    const player = new Player(0, 300);
     this.add(player);
 
     const ba = new BezierAcotr(100, 100);
