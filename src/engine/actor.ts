@@ -65,7 +65,7 @@ export abstract class SpriteActor extends Actor {
 
   drawSprite(
     ctx: CanvasRenderingContext2D,
-    sprite: Sprite,
+    sprite: Sprite | Sprite<HTMLVideoElement>,
     width = sprite.rect.width,
     degree = 0
   ): void {

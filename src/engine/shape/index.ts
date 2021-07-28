@@ -116,13 +116,8 @@ export class Rect extends Coord {
 
     ctx.fillStyle = 'blue';
     ctx.beginPath();
-    ctx.rect(
-      this.x + this.width / 2,
-      this.y + this.height,
-      this.x - this.width,
-      this.y - this.height
-    );
-    ctx.fill();
+    ctx.fillRect(this.lx, this.ty, this.width, this.height);
+
     ctx.globalAlpha = 1;
   }
 }
