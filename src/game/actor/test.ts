@@ -3,12 +3,12 @@ import { Sprite } from '../../engine/asset';
 import { updateObj } from '../../engine/game/scene';
 import { Bezier } from '../../engine/shape/bezier';
 import { Coord, Rect } from '../../engine/shape';
-import { sprites } from '../../assets';
+import { assets } from '../../assets';
 
 export class BezierAcotr extends SpriteActor {
   constructor(x: number, y: number) {
     super(x, y, new Rect(x, y, 10, 20), ['enemy']);
-    this.sprite = sprites.get('ago');
+    this.sprite = assets.sprite('ago');
   }
   public timeCount = 0;
   public sprite: Sprite;

@@ -4,7 +4,7 @@ import { stageObj, typeStageObjs, typeStageObj, stageRect } from '../../const';
 import { Vec2 } from '../../engine/shape/vector';
 import { updateObj } from '../../engine/game/scene';
 import { Sprite } from '../../engine/asset';
-import { sprites } from '../../assets';
+import { assets } from '../../assets';
 
 const { power: powerConf } = stageObj;
 
@@ -28,7 +28,7 @@ export class Power extends SpriteActor {
       Math.random() * -1
     ).normalized.times(initSpeed);
 
-    this.sprite = sprites.get(conf.sprite.name);
+    this.sprite = assets.sprite(conf.sprite.name);
     this.conf = conf;
   }
   public vec: Vec2;

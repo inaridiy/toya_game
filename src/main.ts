@@ -1,20 +1,19 @@
 import { Game } from './engine/game/game';
 import { Test } from './game/scene/test';
 import { size } from './const';
-import { sprites, loadAssets, loadFonts } from './assets';
+import { loadAssets } from './assets';
 
 const wrapper = document.getElementById('wrapper') as HTMLDivElement;
 const canvas = document.getElementById('canvas') as HTMLCanvasElement;
 
 const init = () => {
-  const initPromise = Promise.all([loadAssets(), loadFonts()]);
-
-  initPromise.then(gameInit).catch((e) => console.error(e));
+  loadAssets()
+    .then(gameInit)
+    .catch((e) => console.error(e));
 };
 
 const gameInit = () => {
   setCanvasSize();
-  sprites.load();
   const testScene = new Test();
   const game = new Game(canvas, size.x, size.y, testScene);
   game.start();

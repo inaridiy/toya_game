@@ -5,16 +5,16 @@ import { stageRect, playerConf } from '../../../const';
 import { updateObj } from '../../../engine/game/scene';
 import { ShotA, ShotB } from './player-shot';
 import { Power } from '../obj';
-import { sprites } from '../../../assets';
+import { assets } from '../../../assets';
 
 export class Player extends SpriteActor {
   constructor(x: number, y: number) {
     super(x, y, new Circle(x, y, 10), ['player', 'character'], stageRect);
-    const playerSprite = sprites.get(playerConf.sprite.name);
+    const playerSprite = assets.sprite(playerConf.sprite.name);
     this.sprites = {
       main: playerSprite,
-      bulletA: sprites.get(playerConf.shotA.sprite.name),
-      bulletB: sprites.get(playerConf.shotB.sprite.name),
+      bulletA: assets.sprite(playerConf.shotA.sprite.name),
+      bulletB: assets.sprite(playerConf.shotB.sprite.name),
     };
 
     this.addEventListener('hit', (e) => {
