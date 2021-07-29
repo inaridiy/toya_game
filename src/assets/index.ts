@@ -26,4 +26,9 @@ const playerImages = [
     from: 'https://www.irasutoya.com/2015/08/blog-post_673.html',
   },
   { name: 'ago', url: 'player/ago.png' },
+  {
+    name: 'masp',
+    url: 'player/master-spark.png',
+    from: 'https://commons.nicovideo.jp/material/nc145066',
+  },
 ];

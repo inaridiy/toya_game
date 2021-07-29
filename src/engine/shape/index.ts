@@ -99,6 +99,9 @@ export class Rect extends Coord {
   expansion(x: number, y?: number): Rect {
     return new Rect(this.x, this.y, this.width + x, this.height + (y || x));
   }
+  clone(): Rect {
+    return new Rect(this.x, this.y, this.width, this.height);
+  }
   get lx(): number {
     return this.x - this.width / 2;
   }

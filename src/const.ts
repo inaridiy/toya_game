@@ -85,6 +85,7 @@ export const playerConf = {
   hitSize: 30,
   speed: 10,
   maxPower: 120,
+  bombInterval: 1000,
   sprite: { name: 'kubi', width: 60, rotate: 180 },
 
   shotA: {
@@ -115,5 +116,11 @@ export const playerConf = {
       slow: { coord: new Coord(0, -100), angle: 75 },
     },
     sprite: { name: 'ago', width: 30, rotate: -90 },
+  },
+
+  bombA: {
+    duration: 1000,
+    damage: 999,
+    sprite: { name: 'masp', width: 70, rotate: 0 },
   },
 };

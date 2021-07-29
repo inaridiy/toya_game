@@ -2,7 +2,7 @@ import { SpriteActor } from '../../engine/actor';
 import { Sprite } from '../../engine/asset';
 import { updateObj } from '../../engine/game/scene';
 import { Bezier } from '../../engine/shape/bezier';
-import { Coord, None, Rect } from '../../engine/shape';
+import { Circle, Coord, None, Rect } from '../../engine/shape';
 import { assets } from '../../assets';
 import { stageRect } from '../../const';
 
@@ -38,26 +38,5 @@ export class BezierAcotr extends SpriteActor {
     if (!gameInfo.screenRect.isInside(this.coord)) {
       this.tags = [];
     }
-  }
-}
-
-export class VideoActor extends SpriteActor {
-  constructor() {
-    super(0, -300, new None(0, 0), [], stageRect);
-    this.sprite = assets.video('master');
-    console.log(this.coord);
-  }
-  sprite: Sprite<HTMLVideoElement>;
-  update({ input: { keyInput }, ctx }: updateObj) {
-    if (keyInput.getKey('m')) {
-      // console.log(this.sprite);
-      this.sprite.image
-        .play()
-        .then(() => {
-          this.drawSprite(ctx, this.sprite);
-        })
-        .catch((e) => console.error(e));
-    }
-    this.drawSprite(ctx, this.sprite);
   }
 }

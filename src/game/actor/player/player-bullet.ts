@@ -1,6 +1,6 @@
 import { SpriteActor, Actor } from '../../../engine/actor';
 import { Sprite } from '../../../engine/asset';
-import { Circle, Coord } from '../../../engine/shape';
+import { Circle, Coord, Shapes } from '../../../engine/shape';
 import { Vec2 } from '../../../engine/shape/vector';
 import { Scene, updateObj } from '../../../engine/game/scene';
 import { playerConf } from '../../../const';
@@ -10,11 +10,11 @@ export abstract class PlayerBullet extends SpriteActor {
   constructor(
     x: number,
     y: number,
-    radius: number,
+    hitBox: Shapes,
     public damage: number,
     public sprite: Sprite
   ) {
-    super(x, y, new Circle(x, y, radius), ['playerBullet']);
+    super(x, y, hitBox, ['playerBullet']);
 
     this.addEventListener('hit', (e) => {
       if (e.target.hasTag('enemy')) {
@@ -37,7 +37,13 @@ export abstract class PlayerBullet extends SpriteActor {
 }
 export class PlayerBulletA extends PlayerBullet {
   constructor(coord: Coord, vec: Vec2, sprite: Sprite) {
-    super(coord.x, coord.y, confA.hitSize, confA.damage, sprite);
+    super(
+      coord.x,
+      coord.y,
+      new Circle(coord.x, coord.y, confA.hitSize),
+      confA.damage,
+      sprite
+    );
     this.speedVec = vec.times(this.speed);
   }
 
@@ -66,7 +72,13 @@ export class PlayerBulletA extends PlayerBullet {
 
 export class PlayerBulletB extends PlayerBullet {
   constructor(coord: Coord, sprite: Sprite, direction: Vec2, scene: Scene) {
-    super(coord.x, coord.y, confB.hitSize, confB.damage, sprite);
+    super(
+      coord.x,
+      coord.y,
+      new Circle(coord.x, coord.y, confB.hitSize),
+      confB.damage,
+      sprite
+    );
     this.speedVec = direction;
     this.target = this.getEnemy(scene);
 

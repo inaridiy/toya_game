@@ -1,6 +1,6 @@
 import { Stage } from '../stage';
 import { Player } from '../actor/player';
-import { BezierAcotr, VideoActor } from '../actor/test';
+import { BezierAcotr } from '../actor/test';
 import { Power } from '../actor/obj';
 import { assets } from '../../assets';
 
@@ -12,8 +12,6 @@ export class Test extends Stage {
 
     const ba = new BezierAcotr(100, 100);
     this.add(ba);
-
-    this.add(new VideoActor());
 
     this.add(new Power(0, -400, 'normal'));
     const spawnPower = () => {
@@ -28,4 +26,5 @@ export class Test extends Stage {
     this.beforeFuncs.push(spawnPower);
   }
   count = 0;
+  // debug = true;
 }

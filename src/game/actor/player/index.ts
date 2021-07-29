@@ -6,6 +6,7 @@ import { updateObj } from '../../../engine/game/scene';
 import { ShotA, ShotB } from './player-shot';
 import { Power } from '../obj';
 import { assets } from '../../../assets';
+import { BombA } from './bomb';
 
 export class Player extends SpriteActor {
   constructor(x: number, y: number) {
@@ -40,9 +41,15 @@ export class Player extends SpriteActor {
 
   update(obj: updateObj): void {
     this._move(obj);
-    this.render(obj);
     this._shot(obj);
+    this._bomb(obj);
     this._debug(obj);
+    this.render(obj);
+  }
+  private _bomb({ input }: updateObj) {
+    if (input.isBomb) {
+      this.spawnActor(new BombA());
+    }
   }
 
   private _move({ input }: updateObj): void {
@@ -83,7 +90,7 @@ export class Player extends SpriteActor {
       this._timeCountB = 0;
     }
   }
-  _debug({ scene, input: { keyInput } }: updateObj) {
+  _debug({ scene, input: { keyInput } }: updateObj): void {
     if (!scene.debug) return;
     if (keyInput.getKey('0')) console.log(this);
   }
