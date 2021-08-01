@@ -55,7 +55,7 @@ module.exports = (env, argv) => {
     config.target = 'web';
   }
   if (argv.mode === 'production') {
-    config.plugins.push(new BundleAnalyzerPlugin());
+    // config.plugins.push(new BundleAnalyzerPlugin());
     config.plugins.push(
       new ImageminPlugin({
         test: /\.(jpe?g|png|gif|svg)$/i,
