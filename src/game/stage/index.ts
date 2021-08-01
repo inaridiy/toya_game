@@ -75,7 +75,7 @@ export class Stage extends Scene {
     const measure = ctx.measureText(conf.text);
     const dataX = measure.width + conf.x + conf.margin;
     if (conf.sprite && typeof data === 'number') {
-      for (let i = 0; i < 3; i++) {
+      for (let i = 0; i < data; i++) {
         const sprite = assets.sprite(conf.sprite.name);
         drawSprite(
           ctx,
