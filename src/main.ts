@@ -2,6 +2,8 @@ import { Game } from './engine/game/game';
 import { Test } from './game/scene/test';
 import { size } from './const';
 import { loadAssets } from './assets';
+import { First } from './game/scene/first';
+import { FirstStage } from './game/stage/firstStage';
 
 const wrapper = document.getElementById('wrapper') as HTMLDivElement;
 const canvas = document.getElementById('canvas') as HTMLCanvasElement;
@@ -14,7 +16,7 @@ const init = () => {
 
 const gameInit = () => {
   setCanvasSize();
-  const testScene = new Test();
+  const testScene = new First();
   const game = new Game(canvas, size.x, size.y, testScene);
   game.start();
 };

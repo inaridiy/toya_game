@@ -39,6 +39,9 @@ export class Vec2 {
     this.y *= -1;
     return this;
   }
+  get angle(): number {
+    return Math.atan2(this.y, this.x);
+  }
   static add(v1: Vec2, v2: Vec2): Vec2 {
     return v1.clone().add(v2);
   }

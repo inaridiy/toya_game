@@ -2,9 +2,8 @@ import { SpriteActor } from '../../engine/actor';
 import { Sprite } from '../../engine/asset';
 import { updateObj } from '../../engine/game/scene';
 import { Bezier } from '../../engine/shape/bezier';
-import { Circle, Coord, None, Rect } from '../../engine/shape';
+import { Coord, Rect } from '../../engine/shape';
 import { assets } from '../../assets';
-import { stageRect } from '../../const';
 
 export class BezierAcotr extends SpriteActor {
   constructor(x: number, y: number) {

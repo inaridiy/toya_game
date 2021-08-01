@@ -18,7 +18,7 @@ type uiConf = {
 export class Stage extends Scene {
   constructor(bgImage: HTMLImageElement) {
     super();
-
+    this.add(new Player(0, 300, this));
     const drawFrame = ({ ctx }: updateObj) => {
       this.drawFrame(ctx, bgImage);
       this.drawAllInfo(ctx);
@@ -51,14 +51,17 @@ export class Stage extends Scene {
   }
   drawAllInfo(ctx: CanvasRenderingContext2D): void {
     const [player] = this.get('player');
-    const { power, life, bomb } = player as Player;
-    const {
-      info: { power: confPower, life: confLife, bomb: confBomb },
-    } = ui;
 
-    this.drawInfo(ctx, confPower, power);
-    this.drawInfo(ctx, confLife, life);
-    this.drawInfo(ctx, confBomb, bomb);
+    if (player) {
+      const { power, life, bomb } = player as Player;
+      const {
+        info: { power: confPower, life: confLife, bomb: confBomb },
+      } = ui;
+
+      this.drawInfo(ctx, confPower, power);
+      this.drawInfo(ctx, confLife, life);
+      this.drawInfo(ctx, confBomb, bomb);
+    }
   }
 
   drawInfo(

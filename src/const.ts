@@ -1,6 +1,7 @@
-import { Coord, Rect } from './engine/shape';
+import { Actor } from './engine/actor';
+import { Circle, Coord, Rect } from './engine/shape';
 
-export type typeSprite = { name: string; width: number; rotate: number };
+export type typeSprite = { name: string; width: number; rotate?: number };
 
 export const font = {
   fontPath: '/static/fonts/',
@@ -12,6 +13,7 @@ export const font = {
 
 export const size = { x: 1280, y: 960 };
 
+export const screenRect = Rect.upperLeft(0, 0, size.x, size.y);
 export const stageRect = Rect.upperLeft(30, 30, 600, 900);
 export const deletaRect = stageRect.expansion(400);
 
@@ -32,7 +34,7 @@ export const stageObj: typeStageObjs = {
     normal: {
       incr: 1,
       hitSize: 20,
-      maxInitSpeed: 12,
+      maxInitSpeed: 6,
       minInitSpeed: 4,
       maxSpeed: 8,
       gravity: 0.5,
@@ -82,7 +84,7 @@ export const ui = {
 };
 
 export const playerConf = {
-  hitSize: 30,
+  hitSize: 20,
   speed: 10,
   maxPower: 120,
   bombInterval: 1000,
@@ -92,9 +94,9 @@ export const playerConf = {
     interval: 7,
     qtyPerPower: 15,
     speed: 20,
-    damage: 5,
+    damage: 3,
     hitSize: 10,
-    angleBetween: { normal: 10, slow: 3 },
+    angleBetween: { normal: 10, slow: 2 },
     sprite: { name: 'sinai', width: 20, rotate: 90 },
   },
 
@@ -102,7 +104,7 @@ export const playerConf = {
     interval: 10,
     hitSize: 10,
     speed: 15,
-    damage: 3,
+    damage: 1,
     curvature: 10,
     trackingLimit: 180,
     angleBetween: { normal: 30, slow: 30 },
@@ -122,5 +124,78 @@ export const playerConf = {
     duration: 1000,
     damage: 999,
     sprite: { name: 'masp', width: 70, rotate: 0 },
+  },
+};
+
+export type typeEnemy = {
+  life: number;
+  moveTime: number;
+  bezier: { x: number; y: number }[];
+  actions: number[];
+  sprite: typeSprite;
+};
+export const enemy: { [k in string]: typeEnemy } = {
+  yugaminA: {
+    life: 10,
+    moveTime: 300,
+    bezier: [
+      { x: 0, y: 250 },
+      { x: 200, y: 350 },
+      { x: 600, y: 400 },
+    ],
+    actions: [100, 200],
+    sprite: { name: 'redY', width: 100 },
+  },
+  yugaminB: {
+    life: 10,
+    moveTime: 300,
+    bezier: [
+      { x: 0, y: 250 },
+      { x: -200, y: 350 },
+      { x: -600, y: 400 },
+    ],
+    actions: [100, 200],
+    sprite: { name: 'greenY', width: 100 },
+  },
+  yugaminC: {
+    life: 10,
+    moveTime: 200,
+    bezier: [
+      { x: 200, y: 100 },
+      { x: 200, y: 100 },
+      { x: 0, y: 200 },
+    ],
+    actions: [100],
+    sprite: { name: 'blackY', width: 100 },
+  },
+  yugaminD: {
+    life: 10,
+    moveTime: 200,
+    bezier: [
+      { x: -300, y: 100 },
+      { x: -300, y: 100 },
+      { x: 0, y: 200 },
+    ],
+    actions: [100],
+    sprite: { name: 'yellowY', width: 100 },
+  },
+};
+
+export const enemyShot = {
+  shotA: {
+    sprite: { name: 'blueB', width: 40 },
+    speed: 7,
+    hitSize: 15,
+    0: { qty: 3 },
+    1: { qty: 5 },
+    2: { qty: 7 },
+  },
+  shotB: {
+    sprite: { name: 'redB', width: 40 },
+    speed: 5,
+    hitSize: 15,
+    0: { qty: 3 },
+    1: { qty: 5 },
+    2: { qty: 7 },
   },
 };

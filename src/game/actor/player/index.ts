@@ -2,15 +2,21 @@ import { SpriteActor } from '../../../engine/actor';
 import { Sprite } from '../../../engine/asset';
 import { Circle } from '../../../engine/shape';
 import { stageRect, playerConf } from '../../../const';
-import { updateObj } from '../../../engine/game/scene';
+import { Scene, updateObj } from '../../../engine/game/scene';
 import { ShotA, ShotB } from './player-shot';
 import { Power } from '../obj';
 import { assets } from '../../../assets';
 import { BombA } from './bomb';
 
 export class Player extends SpriteActor {
-  constructor(x: number, y: number) {
-    super(x, y, new Circle(x, y, 10), ['player', 'character'], stageRect);
+  constructor(x: number, y: number, scene: Scene, public life = 3) {
+    super(
+      x,
+      y,
+      new Circle(x, y, playerConf.hitSize),
+      ['player', 'character'],
+      stageRect
+    );
     const playerSprite = assets.sprite(playerConf.sprite.name);
     this.sprites = {
       main: playerSprite,
@@ -26,9 +32,19 @@ export class Player extends SpriteActor {
         if (this.power > playerConf.maxPower) {
           this.power = playerConf.maxPower;
         }
+      } else if (e.target.hasTag('enemyBullet')) {
+        this.life--;
+        scene.get('enemyBullet').forEach((actor) => actor.destroy());
+        for (let i = 0; i < this.power / 15; i++) {
+          this.spawnActor(new Power(0, -300, 'large'));
+        }
+
+        this.x = stageRect.x;
+        this.y = stageRect.y + 300;
       }
     });
   }
+
   private _timeCountA = 0;
   private _timeCountB = 0;
   private _shotIntervalA = playerConf.shotA.interval;
@@ -36,7 +52,6 @@ export class Player extends SpriteActor {
   private sprites: { main: Sprite; bulletA: Sprite; bulletB: Sprite };
   public speed = playerConf.speed;
   public power = 1;
-  public life = 3;
   public bomb = 3;
 
   update(obj: updateObj): void {
@@ -48,7 +63,7 @@ export class Player extends SpriteActor {
   }
   private _bomb({ input }: updateObj) {
     if (input.isBomb) {
-      this.spawnActor(new BombA());
+      //this.spawnActor(new BombA());
     }
   }
 

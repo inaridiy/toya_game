@@ -1,6 +1,6 @@
 import { SpriteActor } from '../../engine/actor';
-import { Circle } from '../../engine/shape';
-import { stageObj, typeStageObjs, typeStageObj, stageRect } from '../../const';
+import { Circle, Rect } from '../../engine/shape';
+import { stageObj, typeStageObjs, typeStageObj } from '../../const';
 import { Vec2 } from '../../engine/shape/vector';
 import { updateObj } from '../../engine/game/scene';
 import { Sprite } from '../../engine/asset';
@@ -9,7 +9,12 @@ import { assets } from '../../assets';
 const { power: powerConf } = stageObj;
 
 export class Power extends SpriteActor {
-  constructor(x: number, y: number, public size: keyof typeStageObjs['power']) {
+  constructor(
+    x: number,
+    y: number,
+    public size: keyof typeStageObjs['power'],
+    stageRect?: Rect
+  ) {
     super(
       x,
       y,
@@ -39,9 +44,6 @@ export class Power extends SpriteActor {
     //console.log(this.coord);
     this.fall();
     this.render(ctx);
-    if (this.y > stageRect.by) {
-      this.destroy();
-    }
   }
   fall(): void {
     this.x += this.vec.x;

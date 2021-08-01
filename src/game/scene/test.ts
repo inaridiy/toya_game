@@ -3,28 +3,19 @@ import { Player } from '../actor/player';
 import { BezierAcotr } from '../actor/test';
 import { Power } from '../actor/obj';
 import { assets } from '../../assets';
+import { RotatingKenmoti } from '../actor/title';
+import { YugaminA } from '../actor/enemy/enemy';
+import { FormationA, FormationB } from '../actor/enemy/enemies';
 
 export class Test extends Stage {
   constructor() {
     super(assets.get('bgImg'));
-    const player = new Player(0, 300);
+    const player = new Player(0, 300, this);
     this.add(player);
 
-    const ba = new BezierAcotr(100, 100);
-    this.add(ba);
-
-    this.add(new Power(0, -400, 'normal'));
-    const spawnPower = () => {
-      if (this.count % 20 == 0) {
-        this.add(new Power(0, -400, 'normal'));
-      }
-      if (this.count % 100 == 0) {
-        this.add(new Power(0, -400, 'large'));
-      }
-      this.count++;
-    };
-    this.beforeFuncs.push(spawnPower);
+    this.add(new FormationA(-200, -500, 2));
+    this.add(new FormationB(200, -500, 2));
   }
   count = 0;
-  // debug = true;
+  //debug = true;
 }
