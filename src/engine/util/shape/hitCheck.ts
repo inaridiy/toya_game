@@ -23,18 +23,9 @@ export const hitCheckOfCircleAndLine = (
   line: Line
 ): boolean => {
   //参考 https://yttm-work.jp/collision/collision_0006.html
-  const startToCenter = new Vec2(
-    circle.x - line.startPoint.x,
-    circle.y - line.startPoint.y
-  );
-  const endToCenter = new Vec2(
-    circle.x - line.endPoint.x,
-    circle.y - line.endPoint.y
-  );
-  const startToEnd = new Vec2(
-    line.startPoint.x - line.endPoint.x,
-    line.startPoint.y - line.endPoint.y
-  );
+  const startToCenter = Vec2.fromToVec(line.startPoint, circle);
+  const endToCenter = Vec2.fromToVec(line.endPoint, circle);
+  const startToEnd = Vec2.fromToVec(line.startPoint, line.endPoint);
 
   const distanceProjection = Vec2.cross(startToCenter, startToEnd.normalized);
 

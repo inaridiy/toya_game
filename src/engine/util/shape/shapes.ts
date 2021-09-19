@@ -1,12 +1,15 @@
+import { Vec2 } from '../vector';
+import { toDeg, toRad } from './const';
+
 export type Shapes = Circle | Line | Rect | None;
 
-export class Coord {
-  constructor(public x: number, public y: number) {}
+export class Coord extends Vec2 {
+  constructor(x: number, y: number) {
+    super(x, y);
+  }
+
   public getDistance(other: Coord): number {
     return Math.sqrt((other.x - this.x) ** 2 + (other.y - this.y) ** 2);
-  }
-  static add(coord: Coord, other: Coord): Coord {
-    return new Coord(coord.x + other.x, coord.y + other.y);
   }
 }
 
@@ -15,27 +18,43 @@ export class Circle extends Coord {
     super(x, y);
   }
   type: 'circle' = 'circle';
+  isInside(c: Coord): boolean {
+    return this.getDistance(c) < this.radius;
+  }
+  cloneShape(): Circle {
+    return new Circle(this.x, this.y, this.radius);
+  }
 }
 
 export class Line extends Coord {
   constructor(x: number, y: number, public length: number, degree: number) {
     super(x, y);
     this.halfOfLength = this.length / 2;
-    this.angle = degree * (Math.PI / 180);
+    this.slope = degree * toRad;
   }
   type: 'line' = 'line';
-  angle: number;
+  slope: number;
   private halfOfLength: number;
 
+  isInside(c: Coord): boolean {
+    const v1 = Vec2.fromToVec(this.startPoint, c);
+    const v2 = Vec2.fromToVec(this.startPoint, this.endPoint);
+    return Vec2.cross(v1, v2) === 0;
+  }
+
+  cloneShape(): Line {
+    return new Line(this.x, this.y, this.length, this.slope * toDeg);
+  }
+
   get startPoint(): Coord {
-    const startX = this.x + this.halfOfLength * Math.cos(this.angle);
-    const startY = this.y + this.halfOfLength * Math.sin(this.angle);
+    const startX = this.x + this.halfOfLength * Math.cos(this.slope);
+    const startY = this.y + this.halfOfLength * Math.sin(this.slope);
     return new Coord(startX, startY);
   }
   get endPoint(): Coord {
-    const startX = this.x - this.halfOfLength * Math.cos(this.angle);
-    const startY = this.y - this.halfOfLength * Math.sin(this.angle);
-    return new Coord(startX, startY);
+    const endX = this.x - this.halfOfLength * Math.cos(this.slope);
+    const endY = this.y - this.halfOfLength * Math.sin(this.slope);
+    return new Coord(endX, endY);
   }
 }
 
@@ -61,7 +80,7 @@ export class Rect extends Coord {
   expansion(x: number, y?: number): Rect {
     return new Rect(this.x, this.y, this.width + x, this.height + (y || x));
   }
-  clone(): Rect {
+  cloneShape(): Rect {
     return new Rect(this.x, this.y, this.width, this.height);
   }
   get lx(): number {

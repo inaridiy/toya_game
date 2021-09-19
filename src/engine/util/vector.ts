@@ -1,3 +1,5 @@
+import { toRad } from './shape/const';
+
 export class Vec2 {
   constructor(x: number, y: number) {
     this.x = x;
@@ -76,7 +78,7 @@ export class Vec2 {
     return new Vec2(Math.cos(radian), Math.sin(radian));
   }
   static degree(degree: number): Vec2 {
-    const radian = (degree / 180) * Math.PI;
+    const radian = degree * toRad;
     return this.radian(radian);
   }
   static setMagnitude(vec: Vec2, num: number): Vec2 {
@@ -84,5 +86,11 @@ export class Vec2 {
     return magnitude === 0
       ? vec
       : new Vec2(x / (magnitude / num), y / (magnitude / num));
+  }
+  static fromToVec(c1: Vec2, c2: Vec2): Vec2 {
+    return new Vec2(c2.x - c1.x, c2.y - c1.y);
+  }
+  static isEqual(v1: Vec2, v2: Vec2): boolean {
+    return v1.x === v2.x && v1.y === v2.y;
   }
 }

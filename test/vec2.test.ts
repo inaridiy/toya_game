@@ -1,3 +1,4 @@
+import { Coord } from '../src/engine/util/shape';
 import { Vec2 } from '../src/engine/util/vector';
 
 describe('vector2のテスト', () => {
@@ -111,5 +112,15 @@ describe('vector2のテスト', () => {
     const v1 = new Vec2(100, 200);
     const v2 = new Vec2(300, 400);
     expect(Vec2.cross(v1, v2)).toBe(-20000);
+  });
+  test('fromToVecのテスト', () => {
+    const c1 = new Coord(3, 4);
+    const c2 = new Coord(10, 15);
+    expect(Vec2.fromToVec(c1, c2)).toEqual(new Vec2(7, 11));
+  });
+  test('isEqualのテスト', () => {
+    const v1 = new Vec2(5, 7);
+    const v2 = new Vec2(5, 7);
+    expect(Vec2.isEqual(v1, v2)).toBe(true);
   });
 });
