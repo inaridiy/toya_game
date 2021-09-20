@@ -33,6 +33,7 @@ export const hitCheckOfCircleAndLine = (
     if (Math.abs(distanceProjection) < circle.radius) {
       const dot1 = Vec2.dot(startToEnd, startToCenter);
       const dot2 = Vec2.dot(endToCenter, startToEnd);
+
       if (dot1 * dot2 <= 0) {
         return true;
       } else {

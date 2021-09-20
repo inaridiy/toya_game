@@ -99,7 +99,4 @@ export class Rect extends Coord {
 
 export class None extends Coord {
   type: 'none' = 'none';
-  stroke(): boolean {
-    return false;
-  }
 }

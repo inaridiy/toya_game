@@ -1,4 +1,4 @@
-import { Coord, Line, Circle, Rect, None } from '../src/engine/util/shape';
+import { Line, Circle, Rect } from '../src/engine/util/shape';
 import {
   hitCheckOfCircles,
   hitCheckOfRects,
@@ -16,6 +16,9 @@ describe('当たり判定のテスト', () => {
 
   const line1 = new Line(5, 7, 100, 90);
   const line2 = new Line(8, 10, 10, 0);
+  const line3 = new Line(5, 9, 10, 75);
+  const line4 = new Line(5, 900, 10, 75);
+
   test('円と円', () => {
     expect(hitCheckOfCircles(circle1, circle2)).toBe(true);
     expect(hitCheckOfCircles(circle1, circle3)).toBe(false);
@@ -27,5 +30,7 @@ describe('当たり判定のテスト', () => {
   test('円と線分', () => {
     expect(hitCheckOfCircleAndLine(circle1, line1)).toBe(true);
     expect(hitCheckOfCircleAndLine(circle1, line2)).toBe(false);
+    expect(hitCheckOfCircleAndLine(circle1, line3)).toBe(true);
+    expect(hitCheckOfCircleAndLine(circle1, line4)).toBe(false);
   });
 });
