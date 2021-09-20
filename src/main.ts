@@ -1,3 +1,3 @@
-import { app } from './engine/core/pixiInit';
+import { app } from './engine/core/pixi/pixiInit';
 
 console.log(app);

@@ -1,5 +1,5 @@
 import { Application } from 'pixi.js';
-import { engineConf } from '../../const';
+import { engineConf } from '../../../const';
 
 export const app = new Application({
   width: innerWidth,
